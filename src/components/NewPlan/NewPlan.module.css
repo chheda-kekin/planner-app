@@ -1,0 +1,31 @@
+.dialog {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: auto;
+    position: absolute;
+    top: 40%;
+    left: 30%;
+    background-color: #ffff;
+    border-radius: 10px;
+}
+
+.dialog_content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    padding: 25px;
+}
+
+.dialog_footer {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px;
+    text-align: right;
+}
+
+.PlanName {
+    flex-basis: 90%;
+    margin-top: 5px;
+}

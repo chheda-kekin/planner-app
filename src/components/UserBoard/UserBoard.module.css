@@ -1,0 +1,23 @@
+.Userboard {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.All_lists {
+    display: flex;
+}
+
+
+
+.navigation {
+    display: flex;
+    align-items: center
+}
+
+.title {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 34px;
+    text-align: left;
+}

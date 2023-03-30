@@ -1,0 +1,59 @@
+.App {
+  text-align: center;
+  font-family: "Segoe UI";
+  display: flex;
+  flex-direction: column;
+  color: #ffff;
+}
+
+.App_Header {
+
+}
+
+.Cancel_Btn {
+  background-color: rgb(255, 255, 255);
+  color: rgb(50, 49, 48);
+  border-radius: 2px;
+  border: 1px solid rgb(138, 136, 134);
+  height: 32px;
+  padding-left: 16px;
+  padding-right: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.Primary_Btn {
+  background-color: rgb(49, 132, 86);
+  color: rgb(255, 255, 255);
+  border-radius: 2px;
+  border: 1px solid rgb(49, 132, 86);
+  height: 32px;
+  padding-left: 16px;
+  padding-right: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 2px;
+  cursor: pointer;
+}
+
+input {
+  border: 0px;
+  border-bottom: 2px solid rgb(138, 136, 134);
+  border-radius: 3px 3px 0 0;
+  background-color: #f2f2f2;
+  padding-left: 12px;
+  padding-right: 12px;
+  line-height: 32px;
+}
+
+input:focus {
+  outline: none;
+  border-bottom: 2px solid rgb(49, 132, 86);
+  /* border: 0px; */
+  /* border-bottom: 2px solid rgb(49, 132, 86); */
+  /* padding-left: 12px; */
+  /* padding-right: 12px; */
+  /* line-height: 32px;  */
+}

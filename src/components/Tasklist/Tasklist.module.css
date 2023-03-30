@@ -1,0 +1,48 @@
+.taskList {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 33.33%;
+    /* background-color: brown; */
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.listTitle {
+    text-align: left;
+    font-size: 14px;
+    height: 32px;
+    font-weight: 600;
+    line-height: 32px;
+    color: rgb(50, 49, 48);
+    margin: 0px 5px;
+}
+
+.columnHeader {
+    padding: 0 13px 0 13px;
+}
+
+.scrollable {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    padding: 0 13px 0 13px;
+}
+
+.taskGrp {
+    padding-top: 13px;
+    min-height: 10px;
+}
+
+/* CSS For Task Card */
+.css-266 > .container {
+    box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px, rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0px;
+    background-color: rgb(255, 255, 255);
+    flex: 0 0 auto;
+    min-height: 10px;
+    min-width: 0px;
+    display: flex;
+    flex-flow: row nowrap;
+    border-radius: 3px;
+    width: 100%;
+}

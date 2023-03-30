@@ -1,0 +1,41 @@
+.Sidebar {
+    width: 20vw;
+    height: auto;
+    border-right: 1px solid rgb(237, 235, 233);
+    color: rgb(50, 49, 48);
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    /* position: fixed; */
+}
+
+.Sidebar_items {
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+    padding-left: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-right: 0;
+    width: 95%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.Sidebar_items:hover {
+    background-color: rgb(237, 235, 233);
+}
+
+.Sidebar_items:active {
+    background-color: rgb(237, 235, 233);
+}
+
+.Sidebar_icon {
+    background-color: rgb(49, 132, 86);
+    margin-left: 5px;
+}
+
+.matIcon {
+    color: rgb(49, 132, 86);
+}

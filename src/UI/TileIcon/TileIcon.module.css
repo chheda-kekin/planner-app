@@ -1,0 +1,12 @@
+.TileIcon {
+    display: flex;
+    flex: 0 0 52px;
+    justify-content: center;
+    align-items: center;
+    height: 52px;
+    font-size: 18px;
+    font-weight: 350;
+    color: #ffff;
+    background-color: #da3b01;
+    margin: 15px;
+}
