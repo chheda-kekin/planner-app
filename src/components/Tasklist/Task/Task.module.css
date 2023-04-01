@@ -8,6 +8,8 @@
     flex-flow: column nowrap;
     border-radius: 3px;
     width: 100%;
+    cursor: pointer;
+    position: relative;
 }
 
 .topBar {
@@ -33,6 +35,32 @@
     margin-top: -5px;
 }
 
+.moreOptions {
+    position: absolute;
+    right: 5px;
+    top: 2px;
+}
+
+.taskMenu {
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px, rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0px;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    color: rgb(50, 49, 48);
+    z-index: 1000000;
+    border-radius: 2px;
+    box-sizing: border-box;
+    width: 75%;
+    position: absolute;
+    opacity: 1;
+    /* left: 234px; */
+}
+
+.container {
+    position: relative;
+}
+
 .titleRow {
     display: flex;
     flex: 0 0 auto;
@@ -41,6 +69,55 @@
     min-width: 0px;
 }
 
-.bottomBar {
+.title {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgb(50, 49, 48);
+    /* flex: 0 0 236px; */
+    margin-top: -1px;
+    overflow: hidden;
+}
 
+.markCompleteButton {
+    margin-right: 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    /* margin: 0px; */
+    /* padding: 0px; */
+    /* border: 0px; */
+    cursor: pointer;
+    overflow: visible;
+    background: transparent;
+    border-radius: 10px;
+}
+
+.bottomBar {
+    display: flex;
+    flex-flow: row nowrap;
+    border-top: 1px solid rgb(237, 235, 233);
+    justify-content: space-between;
+}
+
+.bottomBarRightSection {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+    /* justify-content: flex-end; */
+    /* position: absolute; */
+    /* right: 12px; */
+}
+
+.bottomBarLeftSection {
+    display: flex;
+    flex-flow: row nowrap;
+    /* justify-content: center; */
+    align-items: center;
+    padding-left: 12px;
+}
+
+.dateLabel {
+    display: flex;
+    align-items: center;
 }

@@ -57,3 +57,7 @@ input:focus {
   /* padding-right: 12px; */
   /* line-height: 32px;  */
 }
+
+.matIcon {
+  color: rgb(49, 132, 86);
+}
