@@ -1,5 +1,6 @@
 .header {
-    width: 100vw;
-    background-color: rgb(33, 115, 70);
+    width: 100%;
     padding: 8px;
+    box-sizing: border-box;
+    background-color: rgb(33, 115, 70);
 }

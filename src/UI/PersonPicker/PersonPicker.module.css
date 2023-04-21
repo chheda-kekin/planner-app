@@ -1,0 +1,16 @@
+.ms-BasePicker-input {
+    outline: none;
+    border: none;
+}
+
+.addMember {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.addMemberBtn :hover {
+    background-color: rgb(237, 235, 233);
+}

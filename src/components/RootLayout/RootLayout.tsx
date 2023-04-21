@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 // import Main from "../Main/Main";
 
 import Classes from "./RootLayout.module.css";
+import Modal from "../../UI/Modal";
 
 const RootLayout: React.FC = () => {
+
     return (
         <>
             <Header />
-            <div className={Classes.home}>
+            <div className={Classes.rootLayout}>
                 <Sidebar />
-            <div className={Classes.outlet}>
-                <Outlet />
-            </div>
+                <div className={Classes.outlet}>
+                    <Outlet />
+                </div>
             </div>
         </>
     )

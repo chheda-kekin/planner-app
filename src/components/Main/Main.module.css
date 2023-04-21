@@ -1,7 +1,8 @@
  .main {
     /* height: 100vh; */
+    width: 100%;
     height: auto;
     color: #323130;
     font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
-    padding: 16px 40px;
+    /* padding: 16px 40px; */
 }

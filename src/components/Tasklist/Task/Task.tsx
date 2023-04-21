@@ -2,17 +2,27 @@ import { Checkbox } from "@mui/material";
 import React, { useState } from "react";
 import { DatePicker, mergeStyles, IDatePicker, ICalendarProps, IDatePickerStyles } from "@fluentui/react";
 import { IPersonaSharedProps, IPersonaStyles, Persona, PersonaInitialsColor, PersonaSize } from '@fluentui/react/lib/Persona';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+// import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-
 
 import Classes from "./Task.module.css";
 import AppClasses from "../../../App.module.css";
+import { initializeIcons } from '@fluentui/react';
+initializeIcons();
 
-
-const Task: React.FC = () => {
+const Task: React.FC<{displayModal: () => void}> = ({displayModal}) => {
 
     const [isVisible, setIsVisible] = useState(false);
+
+    enum Directions {
+        Up = 1,
+        Down,
+        Left,
+        Right
+    }
+
+    console.log('All Directions ', Directions.Up);
+    console.log('Down directions', Directions.Down);
 
     const checkboxStyles = {
         color: 'rgb(33, 115, 70)',
@@ -74,10 +84,10 @@ const Task: React.FC = () => {
 
     return (
         <>
-            <div className={Classes.taskCard} onMouseOver={mouseOverHandler} onMouseLeave={mouseLeaveHandler}>
-                <div className={Classes.container}>
+            <div className={Classes.taskCard} onClick={displayModal} onMouseOver={mouseOverHandler} onMouseLeave={mouseLeaveHandler}>
+                {/* <div className={Classes.container}>
                     <div className={Classes.taskMenu}>Task menu</div>
-                </div>
+                </div> */}
                 <div className={Classes.topBar}>
                     <div className={Classes.planName}>Making Planner App in ReactJS + TS</div>
                     <div className={Classes.moreOptions}>
@@ -92,8 +102,10 @@ const Task: React.FC = () => {
                 </div>
                 <div className={Classes.bottomBar}>
                     <div className={Classes.bottomBarLeftSection} onClick={showDatePickerHandler}>
-                        <CalendarMonthIcon className={AppClasses.matIcon} fontSize="small" />                        
-                        <DatePicker styles={datePickerStyles} className={Classes.dateLabel} placeholder="Due"  borderless={true} openOnClick={false} componentRef={instance =>  datePickerRef = instance } />
+                        <DatePicker styles={datePickerStyles} className={Classes.dateLabel}  
+                            borderless={true} 
+                            openOnClick={false} 
+                            componentRef={instance =>  datePickerRef = instance } />
                     </div>
                     <div className={Classes.bottomBarRightSection}>
                         <Persona {...personaProps} size={PersonaSize.size24} styles={personaStyles} />

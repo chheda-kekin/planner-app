@@ -1,5 +1,4 @@
-import React from 'react';
-import Header from './components/Header/Header';
+import React, { useRef, useEffect } from 'react';
 import RootLayout from './components/RootLayout/RootLayout';
 import Main from "./components/Main/Main";
 import UserBoard from './components/UserBoard/UserBoard';
@@ -7,7 +6,14 @@ import PlanTaskboard from './components/PlanTaskboard/PlanTaskboard';
 import Classes from './App.module.css';
 import { createBrowserRouter, RouterProvider, RouteObject } from 'react-router-dom';
 
-function App() {
+const App: React.FC = () => {
+
+  const appRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const {width, height} = appRef.current!.getBoundingClientRect();
+    console.log(`App div width ${width} height ${height}`);
+  }, []);
 
   const RoutesArr: RouteObject[] = [
     {path: "planhub", element: <Main />},
@@ -20,7 +26,7 @@ function App() {
   ]);
 
   return (
-    <div className={Classes.App}>
+    <div ref={appRef} className={Classes.App}>
       <RouterProvider router={router} />
     </div>
   );

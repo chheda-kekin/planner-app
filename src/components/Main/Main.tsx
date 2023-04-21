@@ -1,8 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import PlannerStore, { PlannerState } from "../../Store";
-
-import { planActions } from "../../slices/plan-slice";
+import { PlannerState } from "../../Store";
 import PlanCard from "../PlanCard/PlanCard";
 import Classes from "./Main.module.css";
 

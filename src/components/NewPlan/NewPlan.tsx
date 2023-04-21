@@ -27,8 +27,8 @@ const NewPlan: React.FC<{onCloseModal: () => void}> = (props) => {
                         <input type="text" ref={planInputRef} id="PlanName" className={Classes.PlanName} placeholder="Plan Name" />
                     </div>
                     <div className={Classes.dialog_footer}>
-                        <button className={AppClasses.Cancel_Btn} onClick={props.onCloseModal}>Cancel</button>
                         <button className={AppClasses.Primary_Btn} onClick={savePlanHandler}>Save</button>
+                        <button className={AppClasses.Cancel_Btn} onClick={props.onCloseModal}>Cancel</button>
                     </div>
             </div>
         </>

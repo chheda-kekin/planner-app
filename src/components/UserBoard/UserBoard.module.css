@@ -1,14 +1,15 @@
 .Userboard {
     display: flex;
     flex-direction: column;
-    height: auto;
+    height: 100%;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .All_lists {
     display: flex;
 }
-
-
 
 .navigation {
     display: flex;

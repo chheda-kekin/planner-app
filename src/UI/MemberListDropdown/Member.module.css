@@ -1,0 +1,23 @@
+.user {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 4px 8px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.user:hover {
+    background-color: rgb(237, 235, 233);
+}
+
+.user > button {
+    display: block;
+    background-color: transparent;
+    padding: 2px;
+    margin: 0;
+    cursor: pointer;
+    box-sizing: inherit;
+    font: inherit;
+    border: none;
+}

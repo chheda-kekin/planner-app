@@ -1,0 +1,135 @@
+.taskForm {
+    position: absolute;
+    top: 40%;
+    left: 15%;
+    width: 70%;
+    background-color: #ffff;
+    border-radius: 3px;
+}
+
+.dialog {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: auto;
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    background-color: #ffff;
+    border-radius: 3px;
+}
+
+.dialogHeader {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dialogHeader > .dialogTitle {
+    padding: 32px 36px 20px 28px;
+    font-size: 20px;
+}
+
+.topBtn{
+    position: absolute;
+    display: flex;
+    flex-flow: row nowrap;
+    top: 0;
+    right: 0;
+    padding: 12px 12px 0  0;
+}
+
+.btnIcon {
+    border: none;
+    background-color: #ffff;
+    cursor: pointer;
+}
+
+.dialogContent {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 25px;
+}
+
+.taskEditor {
+    width: 100%;
+    padding: 0px 25px;
+    margin-bottom: 16px;
+}
+
+.planTitle {
+    color: rgb(33, 115, 70);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.taskName {
+    display: flex;
+}
+
+.markCompleteBtn {
+    display: flex;
+    cursor: pointer;
+}
+
+.taskNameFieldWrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    width: 70%;
+    padding-bottom: 4px;
+}
+
+.taskNameFieldWrapper > input {
+    width: 100%;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    color: rgb(50, 49, 48);
+    background-color: #ffff;
+    border: none;
+    text-overflow: ellipsis;
+}
+
+.taskNameFieldWrapper > input:focus {
+    outline: none;
+    border-bottom: 2px solid rgb(49, 132, 86);
+}
+
+.dialogFooter {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px;
+    text-align: right;
+}
+
+.markCompleteBtn {
+    display: flex;
+    align-items: center;
+    border: 1px solid;
+    background-color: #ffff;
+    border: none;
+}
+
+.lastModifiedSection {
+    color: rgb(96, 94, 92);
+    margin-bottom: 32px;
+    font-size: 12px;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+}
+
+.assignedToUsers {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 10px 0px 15px;
+}
+
+.assigneeRow {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    flex: 1 1 0;
+    position: relative;
+    cursor: pointer;
+}

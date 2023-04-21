@@ -1,0 +1,47 @@
+@keyframes growDown {
+    0% {
+        transform: scaleY(0)
+    }
+    80% {
+        transform: scaleY(1.1)
+    }
+    100% {
+        transform: scaleY(1)
+    }
+}
+
+.dropdownContent {
+    position: absolute;
+    /* display: none; */
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.133) 0px 6.4px 14.4px 0px, rgba(0, 0, 0, 0.11) 0px 1.2px 3.6px 0px;
+    color: rgb(50, 49, 48);
+    background-color: rgb(255, 255, 255);
+    width: 288px;
+    padding: 15px;
+    animation: growDown 300ms ease-in-out forwards;   
+    transform-origin: top center;
+}
+
+.searchField {
+    padding-bottom: 8px;
+}
+
+.fieldGroup {
+    width: 100%;
+    color: rgb(50, 49, 48);
+    color: rgb(255, 255, 255);
+    display: flex;
+}
+
+.textField {
+    width: 100%;
+    padding-right: 1px 12px 0 12px;
+    line-height: 32px;
+}
+
+.sectionTitle {
+    font-size: 14px;
+    font-weight: 700;
+    padding-bottom: 8px;
+}

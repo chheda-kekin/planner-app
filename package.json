@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@fluentui/example-data": "^8.4.7",
     "@fluentui/react": "^8.107.0",
     "@fluentui/react-icons": "^2.0.198",
     "@mui/icons-material": "^5.11.11",
@@ -38,7 +39,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3001 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

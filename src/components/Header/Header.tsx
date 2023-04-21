@@ -6,7 +6,7 @@ const Header: React.FC = () => {
     return (
         <>
             <header className={Classes.header}>
-                My Planner App
+                Planner App
             </header>
         </>
     )
