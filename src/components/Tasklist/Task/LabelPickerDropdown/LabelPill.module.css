@@ -1,0 +1,56 @@
+.edtblLblWrpr {
+    margin: 4px;
+    cursor: pointer;
+    flex: 0 1 auto;
+}
+
+.edtblLblWrapperInner {
+    display: flex;
+    height: 24px;
+    justify-content: space-between;
+}
+
+.edtblLbl {
+    flex: 0 1 auto;
+    min-height: 0px;
+    min-width: 0px;
+    border-radius: 3px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    padding: 0px;
+}
+
+.edtblLblInner {
+    display: flex;
+    flex-flow: row nowrap;
+    height: 22px;
+}
+
+.edtblLblTxt {
+    flex: 0 1 auto;
+    cursor: text;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    margin: 0px;
+    padding: 1px 8px 3px;
+    background: transparent;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-height: 0px;
+    min-width: 0px;
+    border: none;
+    color: inherit;
+}
+
+.rmvBtn {
+    display: flex;
+    align-items: center;
+    border: none;
+    height: 22px;
+    padding: 5px;
+    background-color: inherit;
+    color: inherit;
+    cursor: pointer;
+}

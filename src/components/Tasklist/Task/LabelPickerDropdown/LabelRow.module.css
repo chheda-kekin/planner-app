@@ -1,0 +1,114 @@
+.sgstnRw {
+    position: relative;
+}
+
+.suggestionItem {
+    padding: 5px;
+    position: relative;
+}
+
+.edtblLblWrpr {
+    margin: -5px;
+    padding: 5px 5px 5px 13px;
+    cursor: pointer;
+    min-height: 0px;
+    min-width: 0px;
+}
+
+.edtblLblWrpr:hover {
+    background-color: rgb(243, 242, 241);
+}
+
+.edtblLblWrprInner {
+    display: flex;
+    position: relative;
+    flex-flow: row nowrap;
+    height: 24px;
+    justify-content: space-between;
+}
+
+.edtblLbl {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+    padding: 5px;
+}
+
+.edtLblBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    cursor: pointer;
+    line-height: 24px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.edtLblBtn:hover {
+    background-color: #edebe9;
+}
+
+.slctOptn {
+    width: auto;
+}
+
+/* .edtblLblWrpr {
+   width: 80%;     
+} */
+
+.edtLblFldWrpr {
+   position: absolute;
+   top: 0px;
+   right: -152px;
+   width: 145px;
+   background-color: rgb(255, 255, 255);
+   box-shadow: rgba(0, 0, 0, 0.133) 0px 6.4px 14.4px 0px, rgba(0, 0, 0, 0.11) 0px 1.2px 3.6px 0px;
+   outline: transparent;
+   opacity: 1;
+   z-index: 999999 !important;
+   border-radius: 2px;
+   padding: 8px;
+}
+
+.edtLblInner {
+    width: 100%;
+    color: rgb(50, 49, 48);
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.edtLblFldLabel {
+    margin-bottom: 8px;
+}
+
+.lblEdtrTxtFld {
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.txtFldGrp {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    box-sizing: border-box;
+    border-radius: 3px 3px 0;
+    cursor: text;
+}
+
+.txtFldGrp > input {
+    width: 100%;
+    border-radius: 3px 3px 0 0;
+    border-bottom: 2px solid rgb(49, 132, 86);
+}
+
+.txtFldGrp > input:focus {
+    outline: none;
+}

@@ -133,3 +133,41 @@
     position: relative;
     cursor: pointer;
 }
+
+.labelPickerArea {
+    /* display: flex;
+    flex-direction: row;
+    align-items: center; */
+}
+
+.labelPickerWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.labelPickerIcon {
+    padding-right: 5px;
+}
+
+.labelPicker {
+    width: 100%;
+    background-color: rgb(243, 242, 241);
+    cursor: pointer;
+    border-style: solid;
+    border-width: 0px 0px 2px 0px;
+    border-radius: 3px 3px 2px 2px;
+    border-color: transparent transparent rgb(33, 115, 70);
+}
+
+.labelPickerField {
+    display: flex;
+}
+
+.labelPickerFieldGrp {
+    position: relative;
+}
+
+.labelPicker  input {
+    border: 0px;
+}

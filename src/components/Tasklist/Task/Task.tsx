@@ -14,16 +14,6 @@ const Task: React.FC<{displayModal: () => void}> = ({displayModal}) => {
 
     const [isVisible, setIsVisible] = useState(false);
 
-    enum Directions {
-        Up = 1,
-        Down,
-        Left,
-        Right
-    }
-
-    console.log('All Directions ', Directions.Up);
-    console.log('Down directions', Directions.Down);
-
     const checkboxStyles = {
         color: 'rgb(33, 115, 70)',
         '&.Mui-checked': {

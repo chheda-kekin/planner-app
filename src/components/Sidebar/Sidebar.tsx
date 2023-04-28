@@ -24,7 +24,7 @@ const Sidebar: React.FC = () => {
 
     return (
         <>
-            {/* {showNewPlanModal && <Modal><NewPlan onCloseModal={closeModalHandler} /></Modal>} */}
+            {showNewPlanModal && <Modal><NewPlan onCloseModal={closeModalHandler} /></Modal>}
             <div className={Classes.Sidebar}>
                 <div className={Classes.Sidebar_items} onClick={addNewPlanHandler}>
                     <div className="Sidebar_icon">

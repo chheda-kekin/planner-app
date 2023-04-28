@@ -10,11 +10,6 @@ const App: React.FC = () => {
 
   const appRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const {width, height} = appRef.current!.getBoundingClientRect();
-    console.log(`App div width ${width} height ${height}`);
-  }, []);
-
   const RoutesArr: RouteObject[] = [
     {path: "planhub", element: <Main />},
     {path: "userboard", element: <UserBoard />},

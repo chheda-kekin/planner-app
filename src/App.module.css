@@ -56,6 +56,16 @@ input:focus {
   /* line-height: 32px;  */
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(200, 198, 196);
+  border-radius: 10px;
+}
+
 .matIcon {
   color: rgb(49, 132, 86);
 }

@@ -1,11 +1,14 @@
 import Member from './Member';
+import { IFacepilePersona } from "@fluentui/react";
 import Classes from "./MemberListDropdown.module.css";
 
 
-const MemberListDropdown: React.FunctionComponent<{toggleDropdownHandler: () => void}> = (props) => {
+const MemberListDropdown: React.FunctionComponent<{toggleDropdownHandler: (personDetails: IFacepilePersona) => void, people: IFacepilePersona[]}> = (props) => {
 
-    const addMemberListener = () => {
-        props.toggleDropdownHandler();
+    const addMemberListener = (personDetails: IFacepilePersona) => {
+
+        console.log('Added psersona', personDetails);
+        props.toggleDropdownHandler(personDetails);
     }
 
     return (
@@ -19,9 +22,9 @@ const MemberListDropdown: React.FunctionComponent<{toggleDropdownHandler: () => 
                 <div className={Classes.userListSection}>
                     <div className={Classes.sectionTitle}>Suggestions</div>
                     <div className={Classes.userList}>
-                        <Member addMemberListener={addMemberListener} />
-                        <Member addMemberListener={addMemberListener} />
-                        <Member addMemberListener={addMemberListener} />
+                        {props.people.map(people => {
+                            return <Member key={people.personaName} addMemberListener={addMemberListener} personDetails={people} />
+                        })}
                     </div>
                 </div>
             </div>
