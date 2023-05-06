@@ -3,7 +3,7 @@ import { IFacepilePersona } from "@fluentui/react";
 import Classes from "./MemberListDropdown.module.css";
 
 
-const MemberListDropdown: React.FunctionComponent<{toggleDropdownHandler: (personDetails: IFacepilePersona) => void, people: IFacepilePersona[]}> = (props) => {
+const MemberListDropdown: React.FunctionComponent<{ toggleDropdownHandler: (personDetails: IFacepilePersona) => void, people: IFacepilePersona[] }> = (props) => {
 
     const addMemberListener = (personDetails: IFacepilePersona) => {
 

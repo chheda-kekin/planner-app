@@ -7,6 +7,7 @@ import { TaskStatus } from "../../constants";
 
 import Modal from "../../UI/Modal";
 import TaskForm from "../Tasklist/Task/TaskForm";
+import TaskContextProvider from "../Tasklist/Task/TaskContextProvider";
 
 const UserBoard: React.FC = () => {
 
@@ -22,7 +23,13 @@ const UserBoard: React.FC = () => {
 
     return (
         <>
-            {showModal && <Modal><TaskForm onCloseModal={closeModalHandler} /></Modal>}
+            {
+                showModal && <Modal>
+                    <TaskContextProvider>
+                        <TaskForm onCloseModal={closeModalHandler} />
+                    </TaskContextProvider>
+                </Modal>
+            }
             <div className={Classes.Userboard}>
                 <div className={Classes.navigation}>
                     <TileIcon bgcolor="#bf0077">KC</TileIcon>

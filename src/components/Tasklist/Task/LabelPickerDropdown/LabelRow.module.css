@@ -23,18 +23,22 @@
     display: flex;
     position: relative;
     flex-flow: row nowrap;
-    height: 24px;
     justify-content: space-between;
 }
 
 .edtblLbl {
     display: flex;
     align-items: center;
-    justify-content: center;
+    width: 80%;
+}
+
+
+.edtblLblChp {
     border-radius: 3px;
     border: none;
     outline: none;
     padding: 5px;
+    width: auto;
 }
 
 .edtLblBtn {
@@ -101,14 +105,20 @@
     box-sizing: border-box;
     border-radius: 3px 3px 0;
     cursor: text;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
 }
 
-.txtFldGrp > input {
+.txtFldGrp  input {
     width: 100%;
     border-radius: 3px 3px 0 0;
-    border-bottom: 2px solid rgb(49, 132, 86);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
 }
 
-.txtFldGrp > input:focus {
+.txtFldGrp  input:focus {
     outline: none;
+    border-bottom: 2px solid rgb(49, 132, 86);
 }

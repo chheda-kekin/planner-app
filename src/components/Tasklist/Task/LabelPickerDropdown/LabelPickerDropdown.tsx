@@ -36,16 +36,10 @@ const LabelPickerDropdown: React.FunctionComponent = () => {
         });
     }
 
-    function selectLabelOptionHandler(label: string | null) {
-        console.log(`Label selected is ${label}`);
-        
-    }
-
     function getLabelRows() {
         return LabelProps.map(lblPrps => {
             return <LabelRow key={lblPrps.labelName} {...lblPrps}
                 edtLblClickHandler={edtLblClickHandler}
-                slctLblOptnHandler={selectLabelOptionHandler}
                 displayEdtLblDlg={edtLblState.get(lblPrps.labelName)} />
         });
     }

@@ -1,22 +1,25 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import CloseIcon from '@mui/icons-material/Close';
 import { Checkbox } from "@mui/material";
-
-import Classes from './TaskForm.module.css';
-import AppClasses from '../../../App.module.css';
 import PersonPicker from '../../../UI/PersonPicker/PersonPicker';
 import { Tag20Regular } from "@fluentui/react-icons";
 import LabelPickerDropdown from './LabelPickerDropdown/LabelPickerDropdown';
 import LabelPill from './LabelPickerDropdown/LabelPill';
+import { Tag, LabelColors, LabelFontColors } from '../../../constants';
+import TaskContext, { TaskContextType } from './task-context';
 
+import Classes from './TaskForm.module.css';
+import AppClasses from '../../../App.module.css';
 
-// import { AddFilled, Tag16Regular, Tag24Regular } from "@fluentui/react-icons";
 
 const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
 
-    const [taskName, setTaskName] = useState("Some random dummy name");
     const [shwLblPickrDrpdwn, setShwLblPickrDrpdwn] = useState(false);
+
+    const tskCtx = useContext(TaskContext);
+
+    console.log('tskCtx.tasks', tskCtx.tags);
 
     const checkboxStyles = {
         color: 'rgb(33, 115, 70)',
@@ -26,10 +29,29 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
         padding: 0
     };
 
-    const personPickerStyles = {};
+    function getLabelPills(): React.ReactNode {
+        return (tskCtx.tags.map(tag => {
+            const tagColor = tag.color;
+            let bgColor = '';
+            let color = '';
 
+            for(const [key, val] of Object.entries(LabelColors)) {
+                if(key === tagColor) {
+                    bgColor = val;
+                }
+            }
+
+            for(const [key, val] of Object.entries(LabelFontColors)) {
+                if(key === tagColor) {
+                    color = val;
+                }
+            }
+
+            return <LabelPill key={tag.name} backgroundColor={bgColor} color={color} labelName={tag.name} />
+        }))
+    }
+    
     return (
-        <>
             <div className={Classes.dialog}>
                 <div className={Classes.dialogHeader}>
                     <p className={Classes.dialogTitle}></p>
@@ -46,7 +68,8 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                                 <Checkbox size="small" sx={checkboxStyles} />
                             </button>
                             <div className={Classes.taskNameFieldWrapper}>
-                                <input value={taskName} onChange={(e) => { setTaskName(e.target.value) }} />
+                                <input value={tskCtx.name} onChange={(e) => { tskCtx.onTaskNameChange(e) }} />
+                                { tskCtx.name }
                             </div>
                         </div>
                         <div className={Classes.lastModifiedSection}>Last changed 2 hours ago by you</div>
@@ -62,8 +85,9 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                                 </div>
                                 <div className={Classes.labelPicker} onClick={() => setShwLblPickrDrpdwn(true)}>
                                     <div className={Classes.labelPickerField}>
-                                        <LabelPill backgroundColor="rgb(245, 237, 206)" color="rgb(109, 87, 0)" labelName="Yellow" />
-                                        <LabelPill backgroundColor="rgb(219, 235, 199)" color="rgb(56, 99, 4)" labelName="Green" />
+                                        {/* <LabelPill backgroundColor="rgb(245, 237, 206)" color="rgb(109, 87, 0)" labelName="Yellow" />
+                                        <LabelPill backgroundColor="rgb(219, 235, 199)" color="rgb(56, 99, 4)" labelName="Green" /> */}
+                                        { getLabelPills() }
                                         <div className={Classes.labelPickerFieldGrp}>
                                             <input type="text" placeholder="Search for label" />
                                             { shwLblPickrDrpdwn && <LabelPickerDropdown /> }
@@ -75,10 +99,9 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                     </div>
                 </div>
                 <div className={Classes.dialogFooter}>
-                    <button className={AppClasses.Cancel_Btn} onClick={props.onCloseModal}>Cancel</button>
+                    <button className={AppClasses.cancelBtn} onClick={props.onCloseModal}>Cancel</button>
                 </div>
             </div>
-        </>
     )
 }
 

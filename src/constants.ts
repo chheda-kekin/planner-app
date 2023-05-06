@@ -61,6 +61,11 @@ export type LabelProp = {
     labelName: string
 };
 
+export type Tag = {
+    color: string,
+    name: string | null
+};
+
 export const LabelProps: LabelProp[] = [
     {
         backgroundColor: LabelColors.Red,

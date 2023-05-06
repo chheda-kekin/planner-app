@@ -8,7 +8,7 @@
   height: 100vh;
 }
 
-.Cancel_Btn {
+.cancelBtn {
   background-color: rgb(255, 255, 255);
   color: rgb(50, 49, 48);
   border-radius: 2px;
@@ -38,7 +38,8 @@
 
 input {
   border: 0px;
-  border-bottom: 2px solid rgb(138, 136, 134);
+  border-bottom: 2px solid rgb(49, 132, 86);
+  /* border-bottom: 2px solid rgb(138, 136, 134); */
   border-radius: 3px 3px 0 0;
   background-color: #f2f2f2;
   padding-left: 12px;
@@ -49,11 +50,6 @@ input {
 input:focus {
   outline: none;
   border-bottom: 2px solid rgb(49, 132, 86);
-  /* border: 0px; */
-  /* border-bottom: 2px solid rgb(49, 132, 86); */
-  /* padding-left: 12px; */
-  /* padding-right: 12px; */
-  /* line-height: 32px;  */
 }
 
 ::-webkit-scrollbar {

@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Dismiss12Regular, Dismiss16Regular } from "@fluentui/react-icons";
 
 import Classes from "./LabelPill.module.css";
+import TaskContext from "../task-context";
+import { Tag } from "../../../../constants";
 
-const LabelPill: React.FC<{backgroundColor: string, color: string, labelName: string}> = ({backgroundColor, color, labelName}) => {
+const LabelPill: React.FC<{backgroundColor: string, color: string, labelName: string | null}> = ({backgroundColor, color, labelName}) => {
+
+
+    const tskCtx = useContext(TaskContext);
+
+    const tagVal: Tag = {
+        color: backgroundColor,
+        name: labelName
+    };
 
     const edtLblStyles = {
         backgroundColor: backgroundColor,
         color: color
     };
+
+    const removeTagHandler = (e: React.MouseEvent<SVGElement>) => {
+        tskCtx.onRemoveTag(tagVal);
+    }
 
     return (
         <>
@@ -18,7 +32,9 @@ const LabelPill: React.FC<{backgroundColor: string, color: string, labelName: st
                         <div className={Classes.edtblLblInner}>
                             <button className={Classes.edtblLblTxt}>{labelName}</button>
                             <button className={Classes.rmvBtn}>
-                                <Dismiss16Regular />
+                                {/* <div> */}
+                                    <Dismiss16Regular onClick={removeTagHandler} />
+                                {/* </div> */}
                             </button>
                         </div>
                     </div>
