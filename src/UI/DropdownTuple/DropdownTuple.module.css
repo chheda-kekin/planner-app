@@ -1,0 +1,51 @@
+.drpdwnTuple {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin: 0px 10px;
+}
+
+.drpdwnLbl {
+    color: rgb(96, 94, 92);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 5px 0px;
+}
+
+.statusDrpdwn {
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: rgb(243, 242, 241);
+    color: rgb(50, 49, 48);
+    border-color: rgb(243, 242, 241);
+    border-style: solid;
+    border-radius: 3px;
+    border-width: 0px 0px 2px;
+    outline: none;
+    position: relative;
+    display: flex;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.drpdwnTitle {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.drpdwnIcon {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+}

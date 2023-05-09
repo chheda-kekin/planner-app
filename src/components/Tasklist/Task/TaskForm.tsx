@@ -1,13 +1,19 @@
 import { useState, useContext } from 'react';
+import PersonPicker from '../../../UI/PersonPicker/PersonPicker';
+import LabelPickerDropdown from './LabelPickerDropdown/LabelPickerDropdown';
+import LabelPill from './LabelPickerDropdown/LabelPill';
+import DropdownTuple from '../../../UI/DropdownTuple/DropdownTuple';
+import DatePickerField from '../../../UI/DatePickerField/DatePickerField';
+import DescriptionField from './DescriptionField/DescriptionField';
+
+import { Tag20Regular, ChevronDown16Regular } from "@fluentui/react-icons";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import CloseIcon from '@mui/icons-material/Close';
 import { Checkbox } from "@mui/material";
-import PersonPicker from '../../../UI/PersonPicker/PersonPicker';
-import { Tag20Regular } from "@fluentui/react-icons";
-import LabelPickerDropdown from './LabelPickerDropdown/LabelPickerDropdown';
-import LabelPill from './LabelPickerDropdown/LabelPill';
+
 import { Tag, LabelColors, LabelFontColors } from '../../../constants';
 import TaskContext, { TaskContextType } from './task-context';
+// import {} from "@fluentui"
 
 import Classes from './TaskForm.module.css';
 import AppClasses from '../../../App.module.css';
@@ -85,8 +91,6 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                                 </div>
                                 <div className={Classes.labelPicker} onClick={() => setShwLblPickrDrpdwn(true)}>
                                     <div className={Classes.labelPickerField}>
-                                        {/* <LabelPill backgroundColor="rgb(245, 237, 206)" color="rgb(109, 87, 0)" labelName="Yellow" />
-                                        <LabelPill backgroundColor="rgb(219, 235, 199)" color="rgb(56, 99, 4)" labelName="Green" /> */}
                                         { getLabelPills() }
                                         <div className={Classes.labelPickerFieldGrp}>
                                             <input type="text" placeholder="Search for label" />
@@ -96,6 +100,32 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                                 </div>
                             </div>
                         </div>
+                        <div className={Classes.prgrsDrpdwns}>
+                            <DropdownTuple />
+                            <DropdownTuple />    
+                            <DropdownTuple />
+                        </div>
+                        <div className={Classes.dtPickers}>
+                            <div className={Classes.dtPickrWrpr}>
+                                <label htmlFor='strtDtPckr' className={Classes.dtPickrLbl}>
+                                    Start date
+                                </label>
+                                <div className={Classes.dtPickr}>
+                                    <DatePickerField /> 
+                                </div>
+                            </div>
+                            <div className={Classes.dtPickrWrpr}>
+                                <label htmlFor='dueDtPckr' className={Classes.dtPickrLbl}>
+                                    Due date
+                                </label>
+                                <div className={Classes.dtPickr}>
+                                    <DatePickerField /> 
+                                </div>
+                            </div>
+                        </div>
+                        {/* Task Description */}
+                            <DescriptionField />
+                        {/* Task Description end */}
                     </div>
                 </div>
                 <div className={Classes.dialogFooter}>

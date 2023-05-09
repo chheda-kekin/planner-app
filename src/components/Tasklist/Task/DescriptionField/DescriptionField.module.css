@@ -1,0 +1,27 @@
+.dscrptn {
+    box-sizing: border-box;
+    margin: 20px 0px;
+}
+
+.dscrptnHdr {
+    color: rgb(96, 94, 92);
+    font-size: 14px;
+    font-weight: 600;
+    font-style: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    box-sizing: border-box;
+    padding: 5px 0px;
+    overflow-wrap: break-word;
+}
+
+.dscrptnFld {
+    background-color: rgb(243, 242, 241);
+    border-radius: 4px;
+    width: 100%;
+    color: rgb(50, 49, 48);
+    font-size: 14px;
+    font-weight: 400;
+    font-style: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    padding: 8px;
+    height: 32px;
+    cursor: text;
+}

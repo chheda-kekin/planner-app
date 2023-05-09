@@ -171,3 +171,33 @@
 .labelPicker  input {
     border: 0px;
 }
+
+.prgrsDrpdwns {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px -10px;
+}
+
+.dtPickers {
+    display: flex;
+    margin: 10px -10px;
+}
+
+.dtPickrWrpr {
+    width: 25%;
+    margin: 0px 10px;
+}
+
+.dtPickrLbl {
+    color: rgb(96, 94, 92);
+    font-size: 14px;
+    font-weight: 600;
+    font-style: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    box-sizing: border-box;
+    padding: 5px 0px;
+    overflow-wrap: break-word;
+}
+
+.dtPickr {
+    width: 100%;
+}
