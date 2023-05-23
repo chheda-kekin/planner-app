@@ -1,3 +1,4 @@
+import { IPersonaSharedProps } from "@fluentui/react/lib/Persona";
 
 export enum PersonaInitialsColor {
     lightBlue = 0,
@@ -26,6 +27,10 @@ export enum PersonaInitialsColor {
     cyan = 23,
     rust = 24,
 }
+
+export const MonthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
 export const TaskStatus = {
     '0': 'Not started',
@@ -66,7 +71,15 @@ export type Tag = {
     name: string | null
 };
 
+export type TaskComment = {
+    commentText: string,
+    personaProps: IPersonaSharedProps,
+    commentDate: Date,
+    initialsColor: PersonaInitialsColor
+}
+
 export const LabelProps: LabelProp[] = [
+
     {
         backgroundColor: LabelColors.Red,
         color: LabelFontColors.Red,

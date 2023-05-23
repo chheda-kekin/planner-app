@@ -1,28 +1,47 @@
 import React, { useState } from 'react';
 import TaskContext, { TaskContextType } from './task-context';
-import { Tag } from '../../../constants';
+import { Tag, PersonaInitialsColor, TaskComment } from '../../../constants';
 
 const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => {
 
+    const tskCommntsArr: TaskComment[] = [
+        {
+            commentText: 'Adding to the in progress',
+            personaProps: { text: 'Kekin Chheda', imageInitials: 'KC' },
+            commentDate: new Date('December 17, 2022 03:24:00'),
+            initialsColor: PersonaInitialsColor.green
+        },
+        {
+            commentText: 'Needs confirmation about UI wireframes',
+            personaProps: { text: 'Kekin Chheda', imageInitials: 'KC' },
+            commentDate: new Date('December 23, 2022 03:24:00'),
+            initialsColor: PersonaInitialsColor.blue
+        },
+        {
+            commentText: 'Needs confirmation about DoD',
+            personaProps: { text: 'Kekin Chheda', imageInitials: 'KC' },
+            commentDate: new Date('February 2, 2023 03:30:00'),
+            initialsColor: PersonaInitialsColor.lightBlue
+        }
+    ];
+
     const [taskName, setTaskName] = useState("Some random dummy name");
     const [tags, setTags] = useState<Tag[]>([]);
-
-    console.log('Component re-rendered');
+    const [taskComments, setTaskComments] = useState<TaskComment[]>(tskCommntsArr);
 
     function addTagHandler(tag: Tag) {
         let newTags: Tag[] = [];
-        if(tags.findIndex(tg => tg.color === tag.color) === -1) {
+        if (tags.findIndex(tg => tg.color === tag.color) === -1) {
             newTags = [...tags, tag];
             setTags(newTags);
         } else {
             const tgVal = tags.find(tg => tg.color === tag.color);
             const tempTags = tags.filter(tg => tg.color !== tag.color);
-            if(tgVal?.name !== tag.name) {
+            if (tgVal?.name !== tag.name) {
                 newTags = [...tempTags, tag];
                 setTags(newTags);
             }
         }
-        
     }
 
     function removeTagHandler(tag: Tag) {
@@ -33,17 +52,42 @@ const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
         setTaskName(e.target.value);
     }
 
+    function addCommentHandler(comment: string) {
+        const currentUser = 'Kekin Chheda';
+        const user = taskComments.find(comnt => comnt.personaProps.text === currentUser);
+
+        let initialsColor: PersonaInitialsColor;
+
+        if (user) {
+            initialsColor = user.initialsColor;
+        } else {
+            let rand = Math.ceil(Math.random() * 1000);
+            initialsColor = rand % 25;
+        }
+
+        const commentObj: TaskComment = {
+            commentText: comment,
+            personaProps: {imageInitials: 'KC', text: currentUser},
+            commentDate: new Date(),
+            initialsColor: initialsColor
+        };
+
+        setTaskComments(prevCommnts => [...prevCommnts, commentObj]);
+    }
+
     const taskContextValue: TaskContextType = {
         name: taskName,
         tags: tags,
+        taskComments: taskComments,
         onAddTag: addTagHandler,
         onRemoveTag: removeTagHandler,
-        onTaskNameChange: taskNameChangeHandler
+        onTaskNameChange: taskNameChangeHandler,
+        onAddComment: addCommentHandler
     };
 
     return (
         <TaskContext.Provider value={taskContextValue}>
-            { props.children }
+            {props.children}
         </TaskContext.Provider>
     );
 }

@@ -1,9 +1,9 @@
-.dscrptn {
+.commntsSection {
     box-sizing: border-box;
     margin: 20px 0px;
 }
 
-.dscrptnHdr {
+.sectionHdr {
     color: rgb(96, 94, 92);
     font-size: 14px;
     font-weight: 600;
@@ -13,7 +13,7 @@
     overflow-wrap: break-word;
 }
 
-.dscrptnFld {
+.commntsFld {
     background-color: rgb(243, 242, 241);
     border-radius: 4px;
     outline: none;
@@ -26,9 +26,34 @@
     padding: 8px;
     height: 32px;
     cursor: text;
+    resize: none;
 }
 
-.dscrptnFld:focus {
+.commntsFld:focus {
     border-bottom: 2px solid rgb(33, 115, 70);
     border-radius: 3px 3px 2px 2px;
+}
+
+.entrCommntBtn {
+    padding: 0px 24px 0px 24px;
+    height: 32px;
+    background-color: rgb(255, 255, 255);    
+    color: rgb(50, 49, 48);
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px -0.75px;
+    border: 1px solid rgb(237, 235, 233);
+    font-size: 12px;
+    font-style: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    font-weight: 600;
+}
+
+.entrCommntBtn:disabled {
+
+}
+
+.btnWrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    margin-bottom: 40px;
 }

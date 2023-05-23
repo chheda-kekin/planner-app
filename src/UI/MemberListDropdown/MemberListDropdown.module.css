@@ -20,6 +20,8 @@
     padding: 15px;
     animation: growDown 300ms ease-in-out forwards;   
     transform-origin: top center;
+    opacity: 1;
+    z-index: 999999 !important;
 }
 
 .searchField {

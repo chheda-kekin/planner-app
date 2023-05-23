@@ -10,11 +10,12 @@
 .dialog {
     display: flex;
     flex-direction: column;
-    width: 70%;
-    height: auto;
+    width: 60%;
+    max-height: 450px;
+    overflow-y: scroll;
     position: absolute;
-    top: 20%;
-    left: 15%;
+    top: 15%;
+    left: 20%;
     background-color: #ffff;
     border-radius: 3px;
 }
@@ -25,8 +26,8 @@
 }
 
 .dialogHeader > .dialogTitle {
-    padding: 32px 36px 20px 28px;
-    font-size: 20px;
+    /* padding: 10px; */
+    /* font-size: 20px; */
 }
 
 .topBtn{
@@ -35,7 +36,7 @@
     flex-flow: row nowrap;
     top: 0;
     right: 0;
-    padding: 12px 12px 0  0;
+    padding: 12px;
 }
 
 .btnIcon {
@@ -48,7 +49,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 0 25px;
+    padding: 25px;
 }
 
 .taskEditor {

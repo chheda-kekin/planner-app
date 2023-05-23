@@ -3,7 +3,7 @@ import { PayloadAction } from "@reduxjs/toolkit/dist/createAction";
 
 const planSlice = createSlice<string[], { addPlan:(state: string[], action: PayloadAction<string>) => void}>({
     name: "plan",
-    initialState: ["Learn ReactJS", "Becoming TS Pro"],
+    initialState: ["Learn ReactJS", "Becoming TS Pro", "Learning ReactNative", "Learning Responsive Design"],
     reducers: {
         addPlan: (state: string[], action: PayloadAction<string>) => {
             state.push(action.payload);

@@ -10,7 +10,7 @@
     border-radius: 10px;
 }
 
-.dialog_content {
+.dialogContent {
     display: flex;
     justify-content: center;
     align-items: center;
