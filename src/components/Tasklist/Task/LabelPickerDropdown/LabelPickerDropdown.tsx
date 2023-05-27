@@ -53,6 +53,6 @@ const LabelPickerDropdown: React.FunctionComponent = () => {
             </div>
         </>
     )
-}
+};
 
 export default LabelPickerDropdown;

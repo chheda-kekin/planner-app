@@ -1,0 +1,63 @@
+@keyframes growDown {
+    0% {
+        transform: scaleY(0)
+    }
+    80% {
+        transform: scaleY(1.1)
+    }
+    100% {
+        transform: scaleY(1)
+    }
+}
+
+.drpDwnFldWrpr {
+    position: relative;
+}
+
+/* .drpDwnFld {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: rgb(243, 242, 241);
+    cursor: text;
+} */
+
+.drpDwnFld {
+    width: 100%;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    color: rgb(96, 94, 92);
+    font-size: 14px;
+    cursor: text;
+    background-color: rgb(243, 242, 241);
+    border-radius: 3px 3px 0px 0px;
+    line-height: 32px;
+    padding-left: 12px;
+    padding-right: 12px;
+    box-sizing: border-box;
+}
+
+.prgrsDrpdwn {
+    position: absolute;
+    top: 36px;
+    box-sizing: border-box;
+    z-index: 1000000;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: rgb(255, 255, 255);
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.133) 0px 6.4px 14.4px 0px, rgba(0, 0, 0, 0.11) 0px 1.2px 3.6px 0px;
+    color: rgb(50, 49, 48);
+    outline: transparent;
+    width: 100%;
+    animation: growDown 300ms ease-in-out forwards;
+}
+
+.prgrsDrpdwn div {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.prgrsDrpdwn div:hover {
+    background-color: rgb(237, 235, 233);
+}

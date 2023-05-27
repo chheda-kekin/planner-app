@@ -1,12 +1,11 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef, ReactNode } from 'react';
 import PersonPicker from '../../../UI/PersonPicker/PersonPicker';
 import LabelPickerDropdown from './LabelPickerDropdown/LabelPickerDropdown';
 import LabelPill from './LabelPickerDropdown/LabelPill';
-import DropdownTuple from '../../../UI/DropdownTuple/DropdownTuple';
+import ProgressDropdown from './ProgressDropdown/ProgressDropdown';
 import DatePickerField from '../../../UI/DatePickerField/DatePickerField';
 import DescriptionField from './DescriptionField/DescriptionField';
 import CommentBox from './CommentBox/CommentBox';
-
 
 import { Tag20Regular, Dismiss16Regular, MoreHorizontal16Regular } from "@fluentui/react-icons";
 import { Checkbox } from "@mui/material";
@@ -23,6 +22,8 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
     const [shwLblPickrDrpdwn, setShwLblPickrDrpdwn] = useState(false);
 
     const tskCtx = useContext(TaskContext);
+
+    // const labelPickrRef = useRef<HTMLDivElement | undefined>();
 
     const checkboxStyles = {
         color: 'rgb(33, 115, 70)',
@@ -97,7 +98,7 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                                 <div className={Classes.labelPickerField}>
                                     {getLabelPills()}
                                     <div className={Classes.labelPickerFieldGrp}>
-                                        <input type="text" placeholder="Search for label" onBlur={blurFieldHandler} />
+                                        <input type="text" placeholder="Search for label" />
                                         {shwLblPickrDrpdwn && <LabelPickerDropdown />}
                                     </div>
                                 </div>
@@ -105,9 +106,9 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                         </div>
                     </div>
                     <div className={Classes.prgrsDrpdwns}>
-                        <DropdownTuple />
-                        <DropdownTuple />
-                        <DropdownTuple />
+                        <div className={Classes.drpDwnWrpr}>
+                            <ProgressDropdown />
+                        </div>                        
                     </div>
                     <div className={Classes.dtPickers}>
                         <div className={Classes.dtPickrWrpr}>

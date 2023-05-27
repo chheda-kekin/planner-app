@@ -33,10 +33,10 @@ export const MonthNames = ["January", "February", "March", "April", "May", "June
 ];
 
 export const TaskStatus = {
-    '0': 'Not started',
-    '1': 'In progress',
-    '2': 'Completed'
-}
+    'Not Started': '0',
+    'In Progress': '1',
+    'Completed': '2'
+};
 
 export enum LabelColors  {
     Red = 'rgb(233, 199, 205)',
@@ -121,3 +121,5 @@ export const LabelProps: LabelProp[] = [
         labelName: 'Yellow'    
     }
 ];
+
+// export enum Task
