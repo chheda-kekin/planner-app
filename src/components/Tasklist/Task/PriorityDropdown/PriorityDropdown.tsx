@@ -1,38 +1,34 @@
 import React, { useState, useContext } from "react";
-import {
-    Circle20Regular, CircleHalfFill20Regular,
-    CheckmarkCircle20Filled
-} from "@fluentui/react-icons";
-import TaskStatusIcon from "../../../../UI/TaskStatusIcon/TaskStatusIcon";
-
-import { TaskStatus } from "../../../../constants";
+import TaskPriorityIcon from "../../../../UI/TaskPriorityIcon/TaskPriorityIcon";
+import { TaskPriority } from "../../../../constants";
 import TaskContext from "../task-context";
 
-import Classes from "./ProgressDropdown.module.css";
+import Classes from "./PriorityDropdown.module.css";
 
-const ProgressDropdown: React.FC = () => {
+const PriorityDropdown: React.FC = () => {
 
     const [displayDrpDwn, setDisplayDrpDwn] = useState(false);
 
     const taskContext = useContext(TaskContext);
 
 
-    const changeStatusHandler = (status: string) => {
-        taskContext.onTaskStatusChange(status);
+    const changePriorityHandler = (priority: string) => {
+        taskContext.onTaskPriorityChange(priority);
         toggleDropdown();
     }
 
-    const taskStatusArr = Object.keys(TaskStatus);
+    const taskPriorityArr = Object.values(TaskPriority);
 
     const showDropdown = () => {
         if (displayDrpDwn) {
             return (
                 <div className={Classes.prgrsDrpdwn}>
-                    {taskStatusArr.map(status => {
+                    {taskPriorityArr.map(priority => {
                         return (
-                            <div onClick={(event: React.MouseEvent<HTMLDivElement>) => {changeStatusHandler(status)}}>
-                                <div><TaskStatusIcon status={status} /></div>
-                                <div>{ status }</div>
+                            <div onClick={(event: React.MouseEvent<HTMLDivElement>) => {changePriorityHandler(priority)}}>
+                                <div>
+                                    <TaskPriorityIcon priority={priority} /></div>
+                                <div>{ priority }</div>
                             </div>  
                         )
                     })}
@@ -52,16 +48,16 @@ const ProgressDropdown: React.FC = () => {
             <div className={Classes.drpDwnFldWrpr}>
                 <div className={Classes.drpDwnFld} onClick={toggleDropdown}>
                     <div className={Classes.iconDiv}>
-                        <TaskStatusIcon status={taskContext.taskStatus} />
+                        <TaskPriorityIcon priority={taskContext.taskPriority}  />
                     </div>
                     <div className={Classes.statusLabelDiv}>
-                        {taskContext.taskStatus}
+                        {taskContext.taskPriority}
                     </div>
                 </div>
-                {showDropdown()}
+                { showDropdown() }
             </div>
         </>
     )
 }
 
-export default ProgressDropdown;
+export default PriorityDropdown;

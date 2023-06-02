@@ -28,6 +28,8 @@ const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
     const [taskName, setTaskName] = useState("Some random dummy name");
     const [tags, setTags] = useState<Tag[]>([]);
     const [taskComments, setTaskComments] = useState<TaskComment[]>(tskCommntsArr);
+    const [taskStatus, setTaskStatus] = useState("Not Started");
+    const [taskPriority, setTaskPriority] = useState("Low");
 
     function addTagHandler(tag: Tag) {
         let newTags: Tag[] = [];
@@ -75,14 +77,26 @@ const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
         setTaskComments(prevCommnts => [...prevCommnts, commentObj]);
     }
 
+    function taskStatusChangeHandler(status: string) {
+        setTaskStatus(status);
+    }
+
+    function taskPriorityChangeHandler(priority: string) {
+        setTaskPriority(priority);
+    }
+
     const taskContextValue: TaskContextType = {
         name: taskName,
         tags: tags,
         taskComments: taskComments,
+        taskStatus: taskStatus,
+        taskPriority: taskPriority,
         onAddTag: addTagHandler,
         onRemoveTag: removeTagHandler,
         onTaskNameChange: taskNameChangeHandler,
-        onAddComment: addCommentHandler
+        onAddComment: addCommentHandler,
+        onTaskStatusChange: taskStatusChangeHandler,
+        onTaskPriorityChange: taskPriorityChangeHandler
     };
 
     return (

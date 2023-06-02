@@ -38,6 +38,13 @@ export const TaskStatus = {
     'Completed': '2'
 };
 
+export enum TaskPriority {
+    Urgent = 'Urgent',
+    Important = 'Important',
+    Medium = 'Medium',
+    Low = 'Low'
+}
+
 export enum LabelColors  {
     Red = 'rgb(233, 199, 205)',
     Green = 'rgb(219, 235, 199)',

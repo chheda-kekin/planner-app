@@ -13,6 +13,9 @@ import { Checkbox } from "@mui/material";
 import { LabelColors, LabelFontColors } from '../../../constants';
 import TaskContext from './task-context';
 
+import TaskPriorityIcon from '../../../UI/TaskPriorityIcon/TaskPriorityIcon';
+import PriorityDropdown from './PriorityDropdown/PriorityDropdown';
+
 import Classes from './TaskForm.module.css';
 import AppClasses from '../../../App.module.css';
 
@@ -68,7 +71,7 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                         <MoreHorizontal16Regular color='rgb(96, 94, 92)' />
                     </button>
                     <button className={Classes.btnIcon} onClick={props.onCloseModal}>
-                        <Dismiss16Regular  color='rgb(96, 94, 92)' />
+                        <Dismiss16Regular color='rgb(96, 94, 92)' />
                     </button>
                 </div>
             </div>
@@ -107,8 +110,17 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                     </div>
                     <div className={Classes.prgrsDrpdwns}>
                         <div className={Classes.drpDwnWrpr}>
+                            <div className={Classes.lblWrpr}>
+                                <label>Progress</label>
+                            </div>
                             <ProgressDropdown />
-                        </div>                        
+                        </div>
+                        <div className={Classes.drpDwnWrpr}>
+                            <div className={Classes.lblWrpr}>
+                                <label>Priority</label>
+                            </div>
+                            <PriorityDropdown />
+                        </div>
                     </div>
                     <div className={Classes.dtPickers}>
                         <div className={Classes.dtPickrWrpr}>
