@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
-import { Facepile } from '@fluentui/react/lib/Facepile';
+import React, { useState, useContext } from 'react';
 import MemberListDropdown from '../MemberListDropdown/MemberListDropdown';
 import { FacepilePersona } from './FacepilePersona';
 import { people, mru, facepilePersonas } from '@fluentui/example-data';
 import {  PersonaSize, IPersonaProps, PersonaInitialsColor } from '@fluentui/react/lib/Persona';
 import { PersonAdd20Regular } from "@fluentui/react-icons";
 import { initializeIcons } from '@fluentui/react';
+import { Facepile, IFacepilePersona } from '@fluentui/react/lib/Facepile';
+
+import TaskContext from '../../components/Tasklist/Task/task-context';
 import Classes from './PersonPicker.module.css';
-import { IFacepilePersona } from '@fluentui/react/lib/Facepile';
 
 initializeIcons();
+
 const PersonPicker: React.FC = () => {
 
     console.log('PersonPicker rendered !!');
     const members = FacepilePersona;
-    const [persons, setPersons] = useState<IFacepilePersona[]>([]);
+    // const [persons, setPersons] = useState<IFacepilePersona[]>([]);
     const [showMemberListDropdown, setShowMemberListDropdown] = useState(false);
+
+    const tskCntxt = useContext(TaskContext);
+    const persons = tskCntxt.members;
 
     const addButtonProps = {
         ariaLabel: 'Add member to the task',
@@ -25,9 +30,11 @@ const PersonPicker: React.FC = () => {
 
     const toggleMemberListHandler = (personDetails: IFacepilePersona): void => {
         if (persons.findIndex(person => person.personaName === personDetails.personaName) === -1) {
-            setPersons([...persons, personDetails]);
+            // setPersons([...persons, personDetails]);
+            tskCntxt.onAddMember(personDetails);
         } else {
-            setPersons(persons.filter(person => person.personaName !== personDetails.personaName));
+            // setPersons(persons.filter(person => person.personaName !== personDetails.personaName));
+            tskCntxt.onRemoveMember(personDetails);
         }
     }
 
@@ -35,9 +42,11 @@ const PersonPicker: React.FC = () => {
         <>
             <div className={Classes.dropdown}>
                 <div className={Classes.addMember} onClick={() => setShowMemberListDropdown(prevVal => ! prevVal)}>
-                    <PersonAdd20Regular className='addMemberBtn'  color="rgb(50, 49, 48)" />
+                    <div className={Classes.addMemberBtn}>
+                        <PersonAdd20Regular  color="rgb(50, 49, 48)" />
+                    </div>
                     <Facepile
-                        personas={persons}
+                        personas={tskCntxt.members}
                         addButtonProps={addButtonProps}
                         maxDisplayablePersonas={5}
                         personaSize={PersonaSize.size24}

@@ -79,6 +79,7 @@ export type Tag = {
 };
 
 export type TaskComment = {
+    id: string,
     commentText: string,
     personaProps: IPersonaSharedProps,
     commentDate: Date,

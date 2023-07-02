@@ -32,7 +32,7 @@ const CommentBox: React.FC<{taskComments: TaskComment[]}> = ({taskComments}) => 
             </div>
             <div>
                 {taskComments.map(comment => {
-                    return <CommentRow  comment={comment} />
+                    return <CommentRow key={comment.id} comment={comment} />
                 })}
             </div>
         </>

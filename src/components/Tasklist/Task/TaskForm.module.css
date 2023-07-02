@@ -123,7 +123,7 @@
 .assignedToUsers {
     display: flex;
     flex-flow: row nowrap;
-    margin: 10px 0px 15px;
+    margin: 20px 0px;
 }
 
 .assigneeRow {
@@ -136,6 +136,7 @@
 }
 
 .labelPickerArea {
+    margin: 20px 0;
     /* display: flex;
     flex-direction: row;
     align-items: center; */
@@ -177,7 +178,8 @@
     display: flex;
     width: 100%;
     /* justify-content: space-around; */
-    margin: 10px 0px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .drpDwnWrpr {
@@ -194,12 +196,13 @@
 
 .dtPickers {
     display: flex;
-    margin: 10px -10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .dtPickrWrpr {
-    width: 25%;
-    margin: 0px 10px;
+    width: 33.3%;
+    margin-right: 20px;
 }
 
 .dtPickrLbl {

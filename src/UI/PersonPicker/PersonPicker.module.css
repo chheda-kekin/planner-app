@@ -11,6 +11,13 @@
     align-items: center;
 }
 
-.addMemberBtn :hover {
+.addMemberBtn {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.addMemberBtn:hover {
     background-color: rgb(237, 235, 233);
+    border-radius: 15px;
 }

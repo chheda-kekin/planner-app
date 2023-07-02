@@ -6,18 +6,18 @@ import ProgressDropdown from './ProgressDropdown/ProgressDropdown';
 import DatePickerField from '../../../UI/DatePickerField/DatePickerField';
 import DescriptionField from './DescriptionField/DescriptionField';
 import CommentBox from './CommentBox/CommentBox';
-
-import { Tag20Regular, Dismiss16Regular, MoreHorizontal16Regular } from "@fluentui/react-icons";
 import { Checkbox } from "@mui/material";
 
 import { LabelColors, LabelFontColors } from '../../../constants';
 import TaskContext from './task-context';
-
-import TaskPriorityIcon from '../../../UI/TaskPriorityIcon/TaskPriorityIcon';
 import PriorityDropdown from './PriorityDropdown/PriorityDropdown';
 
 import Classes from './TaskForm.module.css';
 import AppClasses from '../../../App.module.css';
+import { Tag20Regular, Dismiss16Regular, MoreHorizontal16Regular } from "@fluentui/react-icons";
+import { initializeIcons } from "@fluentui/react";
+
+initializeIcons();
 
 
 const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
