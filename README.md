@@ -1,5 +1,11 @@
 # planner-app
-Project planner app developed in ReactJS along with TypeScript with redux used as context to mage the state across components.
+Task planner app developed in ReactJS along with TypeScript with redux used as context to manage the state across components. Following libraries used to develop frontend of the app.
+- React router v6
+- Redux toolkit
+- Chart.js
+- Microsoft's FluentUI (https://developer.microsoft.com/en-us/fluentui#/get-started/web)
+- React material
+  
 
 
 
