@@ -9,6 +9,8 @@ export type TaskContextType = {
     taskComments: TaskComment[],
     taskStatus: string,
     taskPriority: string,
+    startDate: number,
+    dueDate: number,
     onTaskNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
     onAddMember: (member: IFacepilePersona) => void,
     onRemoveMember: (member: IFacepilePersona) => void,
@@ -16,7 +18,9 @@ export type TaskContextType = {
     onRemoveTag: (tag: Tag) => void,
     onAddComment: (comment: string) => void,
     onTaskStatusChange: (status: string) => void,
-    onTaskPriorityChange: (priority: string) => void
+    onTaskPriorityChange: (priority: string) => void,
+    onStartDateChange: (date: string) => void,
+    onDueDateChange: (date: string) => void
 };
 
 const TaskContext = React.createContext<TaskContextType>({
@@ -26,6 +30,10 @@ const TaskContext = React.createContext<TaskContextType>({
     taskComments: [],
     taskStatus: '',
     taskPriority: '',
+    startDate: new Date().getTime(),
+    dueDate: new Date().getTime(),
+    onStartDateChange: (startDate: string) => {},
+    onDueDateChange: (dueDate: string) => {},
     onTaskNameChange: (e: React.ChangeEvent<HTMLInputElement>) => {},
     onAddMember: (member: IFacepilePersona) => {},
     onRemoveMember: (member: IFacepilePersona) => {},

@@ -37,7 +37,7 @@ const UserBoard: React.FC = () => {
                 </div>
                 <div className={Classes.All_lists}>
                     {Object.keys(TaskStatus).map((status) => {
-                        return <Tasklist displayModal={displayModal} key={status} status={status} />
+                        return <Tasklist displayAddTaskButton={false} displayModal={displayModal} key={status} status={status} />
                     })}
                 </div>
             </div>

@@ -1,14 +1,18 @@
+import { useContext } from 'react';
+import TaskContext from '../../components/Tasklist/Task/task-context';
 import Member from './Member';
 import { IFacepilePersona } from "@fluentui/react";
 import Classes from "./MemberListDropdown.module.css";
 
-
 const MemberListDropdown: React.FunctionComponent<{ toggleDropdownHandler: (personDetails: IFacepilePersona) => void, people: IFacepilePersona[] }> = (props) => {
 
+    const tskContext = useContext(TaskContext);
+    
     const addMemberListener = (personDetails: IFacepilePersona) => {
 
         console.log('Added psersona', personDetails);
         props.toggleDropdownHandler(personDetails);
+        console.log('TaskContext', tskContext);
     }
 
     return (

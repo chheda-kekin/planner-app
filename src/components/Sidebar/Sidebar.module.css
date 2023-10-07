@@ -12,7 +12,7 @@
 .Sidebar_items {
     display: flex;
     /* justify-content: center; */
-    /* align-items: center; */
+    align-items: center;
     padding-left: 5%;
     padding-top: 5%;
     padding-bottom: 5%;
@@ -31,6 +31,9 @@
 }
 
 .Sidebar_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: rgb(49, 132, 86);
     margin-left: 5px;
 }

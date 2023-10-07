@@ -13,8 +13,6 @@ import Classes from './PersonPicker.module.css';
 initializeIcons();
 
 const PersonPicker: React.FC = () => {
-
-    console.log('PersonPicker rendered !!');
     const members = FacepilePersona;
     // const [persons, setPersons] = useState<IFacepilePersona[]>([]);
     const [showMemberListDropdown, setShowMemberListDropdown] = useState(false);
@@ -30,6 +28,7 @@ const PersonPicker: React.FC = () => {
 
     const toggleMemberListHandler = (personDetails: IFacepilePersona): void => {
         if (persons.findIndex(person => person.personaName === personDetails.personaName) === -1) {
+            console.log('PersonPicker toggleMemberListHandler called...');
             // setPersons([...persons, personDetails]);
             tskCntxt.onAddMember(personDetails);
         } else {

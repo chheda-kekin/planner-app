@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Modal from "../../UI/Modal";
+// import Modal from "../../UI/Modal";
+import Modal from '@mui/material/Modal';
 import Classes from "./Sidebar.module.css";
 import NewPlan from "../NewPlan/NewPlan";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +25,9 @@ const Sidebar: React.FC = () => {
 
     return (
         <>
-            {showNewPlanModal && <Modal><NewPlan onCloseModal={closeModalHandler} /></Modal>}
+            {showNewPlanModal && <Modal open={showNewPlanModal} onClose={closeModalHandler}>
+                <NewPlan onCloseModal={closeModalHandler} />
+                </Modal>}
             <div className={Classes.Sidebar}>
                 <div className={Classes.Sidebar_items} onClick={addNewPlanHandler}>
                     <div className="Sidebar_icon">

@@ -4,7 +4,7 @@ import { LabelProps, LabelProp } from "../../../../constants";
 
 import Classes from "./LabelPickerDropdown.module.css";
 
-const LabelPickerDropdown: React.FunctionComponent = () => {
+const LabelPickerDropdown: React.FunctionComponent<{onLabelRowClickListener: () => void}> = (props) => {
 
     const initialEdtLblState = getLabelStateMap();
     const [edtLblState, setEdtLblState] = useState<Map<string, boolean>>(initialEdtLblState);
@@ -20,7 +20,6 @@ const LabelPickerDropdown: React.FunctionComponent = () => {
     }
 
     function edtLblClickHandler(labelName: string) {
-
         setEdtLblState((prevMapVal) => {
             const newStateMap = new Map<string, boolean>();
 
@@ -38,7 +37,7 @@ const LabelPickerDropdown: React.FunctionComponent = () => {
 
     function getLabelRows() {
         return LabelProps.map(lblPrps => {
-            return <LabelRow key={lblPrps.labelName} {...lblPrps}
+            return <LabelRow clkLblRwHandler={props.onLabelRowClickListener} key={lblPrps.labelName} {...lblPrps}
                 edtLblClickHandler={edtLblClickHandler}
                 displayEdtLblDlg={edtLblState.get(lblPrps.labelName)} />
         });

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TaskContext, { TaskContextType } from './task-context';
 import { Tag, PersonaInitialsColor, TaskComment } from '../../../constants';
 import { IFacepilePersona } from '@fluentui/react';
+import { LabelColors } from '../../../constants';
 
 const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => {
 
@@ -33,12 +34,17 @@ const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
         {imageInitials: 'KC', personaName: 'Kekin Chheda', initialsColor: PersonaInitialsColor.darkGreen}
     ];
 
-    const [taskName, setTaskName] = useState("Some random dummy name");
-    const [tags, setTags] = useState<Tag[]>([]);
+    const startDateVal = new Date().getTime();
+    const endDateVal = new Date().getTime();
+
+    const [taskName, setTaskName] = useState("Completing React JS project");
+    const [tags, setTags] = useState<Tag[]>([{color: 'Yellow', name: 'Imp'}]);
     const [taskComments, setTaskComments] = useState<TaskComment[]>(tskCommntsArr);
     const [taskStatus, setTaskStatus] = useState("Not Started");
     const [taskPriority, setTaskPriority] = useState("Low");
     const [members, setMembers] = useState<IFacepilePersona[]>([]);
+    const [startDate, setStartDate] = useState(startDateVal);
+    const [dueDate, setDueDate] = useState(endDateVal);
 
     function addTagHandler(tag: Tag) {
         let newTags: Tag[] = [];
@@ -105,6 +111,18 @@ const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
         setMembers(members.filter(m => m.personaName !== member.personaName));
     }
 
+    function setStartDateHandler(date: string) {
+        console.log(`Start date is: ${date}`);
+        const dtObj = new Date(date);
+        setStartDate(dtObj.getTime());
+    }
+
+    function setDueDateHandler(date: string) {
+        console.log(`Due date is ${date}`);
+        const dtObj = new Date(date);
+        setDueDate(dtObj.getTime());
+    }
+
     const taskContextValue: TaskContextType = {
         name: taskName,
         members: taskMembers,
@@ -112,6 +130,10 @@ const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
         taskComments: taskComments,
         taskStatus: taskStatus,
         taskPriority: taskPriority,
+        startDate: startDate,
+        dueDate: dueDate,
+        onStartDateChange: setStartDateHandler,
+        onDueDateChange: setDueDateHandler,
         onAddTag: addTagHandler,
         onRemoveTag: removeTagHandler,
         onTaskNameChange: taskNameChangeHandler,

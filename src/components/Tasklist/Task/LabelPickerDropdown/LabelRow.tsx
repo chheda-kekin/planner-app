@@ -10,7 +10,8 @@ type LabelRowProps = {
     color: string,
     labelName: string,
     displayEdtLblDlg: boolean | undefined,
-    edtLblClickHandler: (name: string) => void
+    edtLblClickHandler: (name: string) => void,
+    clkLblRwHandler: () => void
 };
 
 const LabelRow: React.FunctionComponent<LabelRowProps> = (props) => {
@@ -48,13 +49,14 @@ const LabelRow: React.FunctionComponent<LabelRowProps> = (props) => {
         if(labelDivRef.current) {
             taskContext.onAddTag({color: labelName, name: labelDivRef.current!.textContent});
         }
+        props.clkLblRwHandler();
     }
 
     return (
         <>
             <div className={Classes.sgstnRw} role="option">
                 <div className={Classes.suggestionItem}>
-                    <div className={Classes.sugstnItmBtn} role="button">
+                    <div className={Classes.sugstnItmBtn} role="button"> 
                         <div className={Classes.edtblLblWrpr}>
                             <div className={Classes.edtblLblWrprInner}>
                                 <div className={Classes.edtblLbl} onClick={lblRwClkListener}>

@@ -1,4 +1,4 @@
-import { useState, useContext, useRef, ReactNode } from 'react';
+import { useState, useContext, useRef, useCallback, ReactNode } from 'react';
 import PersonPicker from '../../../UI/PersonPicker/PersonPicker';
 import LabelPickerDropdown from './LabelPickerDropdown/LabelPickerDropdown';
 import LabelPill from './LabelPickerDropdown/LabelPill';
@@ -19,12 +19,13 @@ import { initializeIcons } from "@fluentui/react";
 
 initializeIcons();
 
-
 const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
 
     const [shwLblPickrDrpdwn, setShwLblPickrDrpdwn] = useState(false);
 
     const tskCtx = useContext(TaskContext);
+
+    console.log('Task Context', tskCtx);
 
     // const labelPickrRef = useRef<HTMLDivElement | undefined>();
 
@@ -37,6 +38,7 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
     };
 
     const getLabelPills = (): React.ReactNode => {
+
         return (tskCtx.tags.map(tag => {
             const tagColor = tag.color;
             let bgColor = '';
@@ -58,101 +60,106 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
         }))
     }
 
-    const blurFieldHandler = () => {
-        setShwLblPickrDrpdwn(false);
+    const submitFormHandler = () => {
+        console.log(`Task context is ${JSON.stringify(tskCtx)}`);
     }
 
+    const hideLabelPickerHandler = () => {
+        setShwLblPickrDrpdwn(false);
+        console.log(`Show label picker dropdown value ${shwLblPickrDrpdwn}`);
+    };
+
     return (
-        <div className={Classes.dialog}>
-            <div className={Classes.dialogHeader}>
-                <p className={Classes.dialogTitle}></p>
-                <div className={Classes.topBtn}>
-                    <button className={Classes.btnIcon}>
-                        <MoreHorizontal16Regular color='rgb(96, 94, 92)' />
-                    </button>
-                    <button className={Classes.btnIcon} onClick={props.onCloseModal}>
-                        <Dismiss16Regular color='rgb(96, 94, 92)' />
-                    </button>
-                </div>
-            </div>
-            <div className={Classes.dialogContent}>
-                <div className={Classes.taskEditor}>
-                    <div className={Classes.planTitle}>Becoming ReactJS Pro</div>
-                    <div className={Classes.taskName}>
-                        <button className={Classes.markCompleteBtn} title="Mark task as complete">
-                            <Checkbox size="small" sx={checkboxStyles} />
-                        </button>
-                        <div className={Classes.taskNameFieldWrapper}>
-                            <input value={tskCtx.name} onChange={(e) => { tskCtx.onTaskNameChange(e) }} />
-                        </div>
-                    </div>
-                    <div className={Classes.lastModifiedSection}>Last changed 2 hours ago by you</div>
-                    <div className={Classes.assignedToUsers}>
-                        <div className={Classes.assigneeRow}>
-                            <PersonPicker />
-                        </div>
-                    </div>
-                    <div className={Classes.labelPickerArea}>
-                        <div className={Classes.labelPickerWrapper}>
-                            <div className={Classes.labelPickerIcon}>
-                                <Tag20Regular color="rgb(96, 94, 92)" />
+                <div className={Classes.dialog}>
+                        <div className={Classes.dialogHeader}>
+                            <p className={Classes.dialogTitle}></p>
+                            <div className={Classes.topBtn}>
+                                <button className={Classes.btnIcon}>
+                                    <MoreHorizontal16Regular color='rgb(96, 94, 92)' />
+                                </button>
+                                <button className={Classes.btnIcon} onClick={props.onCloseModal}>
+                                    <Dismiss16Regular color='rgb(96, 94, 92)' />
+                                </button>
                             </div>
-                            <div className={Classes.labelPicker} onClick={() => setShwLblPickrDrpdwn(true)}>
-                                <div className={Classes.labelPickerField}>
-                                    {getLabelPills()}
-                                    <div className={Classes.labelPickerFieldGrp}>
-                                        <input type="text" placeholder="Search for label" />
-                                        {shwLblPickrDrpdwn && <LabelPickerDropdown />}
+                        </div>
+                        <div className={Classes.dialogContent}>
+                            <div className={Classes.taskEditor}>
+                                <div className={Classes.planTitle}>Becoming ReactJS Pro</div>
+                                <div className={Classes.taskName}>
+                                    <button className={Classes.markCompleteBtn} title="Mark task as complete">
+                                        <Checkbox size="small" sx={checkboxStyles} />
+                                    </button>
+                                    <div className={Classes.taskNameFieldWrapper}>
+                                        <input value={tskCtx.name} onChange={(e) => { tskCtx.onTaskNameChange(e) }} />
                                     </div>
+                                </div>
+                                <div className={Classes.lastModifiedSection}>Last changed 2 hours ago by you</div>
+                                <div className={Classes.assignedToUsers}>
+                                    <div className={Classes.assigneeRow}>
+                                        <PersonPicker />
+                                    </div>
+                                </div>
+                                <div className={Classes.labelPickerArea}>
+                                    <div className={Classes.labelPickerWrapper}>
+                                        <div className={Classes.labelPickerIcon}>
+                                            <Tag20Regular color="rgb(96, 94, 92)" />
+                                        </div>
+                                        <div className={Classes.labelPicker} onClick={() => setShwLblPickrDrpdwn(true)}>
+                                            <div className={Classes.labelPickerField}>
+                                                {getLabelPills()}
+                                                <div className={Classes.labelPickerFieldGrp}>
+                                                    <input type="text" placeholder="Search for label" />
+                                                    {shwLblPickrDrpdwn && <LabelPickerDropdown onLabelRowClickListener={hideLabelPickerHandler} />}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={Classes.prgrsDrpdwns}>
+                                    <div className={Classes.drpDwnWrpr}>
+                                        <div className={Classes.lblWrpr}>
+                                            <label>Progress</label>
+                                        </div>
+                                        <ProgressDropdown />
+                                    </div>
+                                    <div className={Classes.drpDwnWrpr}>
+                                        <div className={Classes.lblWrpr}>
+                                            <label>Priority</label>
+                                        </div>
+                                        <PriorityDropdown />
+                                    </div>
+                                </div>
+                                <div className={Classes.dtPickers}>
+                                    <div className={Classes.dtPickrWrpr}>
+                                        <label htmlFor='strtDtPckr' className={Classes.dtPickrLbl}>
+                                            Start date
+                                        </label>
+                                        <div className={Classes.dtPickr}>
+                                            <DatePickerField selectedDate={new Date(tskCtx.startDate)} selectDateListener={tskCtx.onStartDateChange} />
+                                        </div>
+                                    </div>
+                                    <div className={Classes.dtPickrWrpr}>
+                                        <label htmlFor='dueDtPckr' className={Classes.dtPickrLbl}>
+                                            Due date
+                                        </label>
+                                        <div className={Classes.dtPickr}>
+                                            <DatePickerField  selectedDate={new Date(tskCtx.dueDate)} selectDateListener={tskCtx.onDueDateChange} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <DescriptionField dscrptn="Some random text as notes" />
+                                </div>
+                                <div>
+                                    <CommentBox taskComments={tskCtx.taskComments} />
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className={Classes.prgrsDrpdwns}>
-                        <div className={Classes.drpDwnWrpr}>
-                            <div className={Classes.lblWrpr}>
-                                <label>Progress</label>
-                            </div>
-                            <ProgressDropdown />
+                        <div className={Classes.dialogFooter}>
+                            <button className={AppClasses.primaryBtn} onClick={submitFormHandler}>Ok</button>
+                            <button className={AppClasses.cancelBtn} onClick={props.onCloseModal}>Cancel</button>
                         </div>
-                        <div className={Classes.drpDwnWrpr}>
-                            <div className={Classes.lblWrpr}>
-                                <label>Priority</label>
-                            </div>
-                            <PriorityDropdown />
-                        </div>
-                    </div>
-                    <div className={Classes.dtPickers}>
-                        <div className={Classes.dtPickrWrpr}>
-                            <label htmlFor='strtDtPckr' className={Classes.dtPickrLbl}>
-                                Start date
-                            </label>
-                            <div className={Classes.dtPickr}>
-                                <DatePickerField />
-                            </div>
-                        </div>
-                        <div className={Classes.dtPickrWrpr}>
-                            <label htmlFor='dueDtPckr' className={Classes.dtPickrLbl}>
-                                Due date
-                            </label>
-                            <div className={Classes.dtPickr}>
-                                <DatePickerField />
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <DescriptionField dscrptn="Some random text as notes" />
-                    </div>
-                    <div>
-                        <CommentBox taskComments={tskCtx.taskComments} />
-                    </div>
                 </div>
-            </div>
-            <div className={Classes.dialogFooter}>
-                <button className={AppClasses.primaryBtn} onClick={props.onCloseModal}>Ok</button>
-                <button className={AppClasses.cancelBtn} onClick={props.onCloseModal}>Cancel</button>
-            </div>
-        </div>
     )
 }
 

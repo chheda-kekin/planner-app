@@ -1,3 +1,25 @@
-.Taskboard {
-    height: 100vh;
+.taskboard {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding-bottom: 10px;
+}
+
+.allLists {
+    display: flex;
+}
+
+.navigation {
+    display: flex;
+    align-items: center
+}
+
+.title {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 34px;
+    text-align: left;
 }

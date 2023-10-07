@@ -1,8 +1,11 @@
-import { Checkbox } from "@mui/material";
 import React, { useState } from "react";
+import TaskForm from "./TaskForm";
+import TaskContextProvider from "./TaskContextProvider"; 
 import { DatePicker, mergeStyles, IDatePicker, ICalendarProps, IDatePickerStyles } from "@fluentui/react";
 import { IPersonaSharedProps, IPersonaStyles, Persona, PersonaInitialsColor, PersonaSize } from '@fluentui/react/lib/Persona';
 // import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { Checkbox } from "@mui/material";
+import Modal from "@mui/material/Modal";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 import Classes from "./Task.module.css";
@@ -13,6 +16,7 @@ initializeIcons();
 const Task: React.FC<{displayModal: () => void}> = ({displayModal}) => {
 
     const [isVisible, setIsVisible] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const checkboxStyles = {
         color: 'rgb(33, 115, 70)',
@@ -54,7 +58,7 @@ const Task: React.FC<{displayModal: () => void}> = ({displayModal}) => {
         }
     }
 
-    const personaProps: IPersonaSharedProps = {  
+    const personaProps: IPersonaSharedProps = {
         imageInitials: "KC"
     }
 
@@ -72,9 +76,22 @@ const Task: React.FC<{displayModal: () => void}> = ({displayModal}) => {
         setIsVisible(false);
     }
 
+    function handleClose() {
+        setOpen(false);
+    }
+
+    function openModal() {
+        setOpen(true);
+    }
+
     return (
         <>
-            <div className={Classes.taskCard} onClick={displayModal} onMouseOver={mouseOverHandler} onMouseLeave={mouseLeaveHandler}>
+            <Modal open={open} onClose={handleClose}>
+                <TaskContextProvider>
+                    <TaskForm onCloseModal={handleClose} />
+                </TaskContextProvider>
+            </Modal>
+            <div className={Classes.taskCard} onClick={openModal} onMouseOver={mouseOverHandler} onMouseLeave={mouseLeaveHandler}>
                 {/* <div className={Classes.container}>
                     <div className={Classes.taskMenu}>Task menu</div>
                 </div> */}

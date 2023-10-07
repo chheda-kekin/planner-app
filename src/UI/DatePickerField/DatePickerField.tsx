@@ -1,7 +1,7 @@
 import React from 'react';
 import { DatePicker, IDatePickerStyles } from '@fluentui/react';
 
-const DatePickerField: React.FC = () => {
+const DatePickerField: React.FC<{selectedDate: Date, selectDateListener: (e: any) => void}> = (props) => {
 
     const datePickerStyles: IDatePickerStyles = {
         textField: {
@@ -29,7 +29,7 @@ const DatePickerField: React.FC = () => {
 
     return (
         <>
-            <DatePicker borderless={true} styles={datePickerStyles} />
+            <DatePicker borderless={true} styles={datePickerStyles} value={props.selectedDate} onSelectDate={props.selectDateListener} />
         </>
     )
 }
