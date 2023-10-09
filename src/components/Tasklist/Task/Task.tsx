@@ -42,7 +42,8 @@ const Task: React.FC<{displayModal: () => void}> = ({displayModal}) => {
         textField: {
             "& .ms-TextField-field": {
                 fontSize: 12,
-                fontWeight: 400
+                fontWeight: 400,
+                'marginRight': '5px'
             }
         },
         root: {
@@ -110,7 +111,7 @@ const Task: React.FC<{displayModal: () => void}> = ({displayModal}) => {
                 <div className={Classes.bottomBar}>
                     <div className={Classes.bottomBarLeftSection} onClick={showDatePickerHandler}>
                         <DatePicker styles={datePickerStyles} className={Classes.dateLabel}  
-                            borderless={true} 
+                            borderless={true}
                             openOnClick={false} 
                             componentRef={instance =>  datePickerRef = instance } />
                     </div>
