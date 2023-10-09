@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import TaskContext, { TaskContextType } from './task-context';
 import { Tag, PersonaInitialsColor, TaskComment } from '../../../constants';
 import { IFacepilePersona } from '@fluentui/react';
-import { LabelColors } from '../../../constants';
 
 const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => {
 
@@ -42,7 +41,7 @@ const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
     const [taskComments, setTaskComments] = useState<TaskComment[]>(tskCommntsArr);
     const [taskStatus, setTaskStatus] = useState("Not Started");
     const [taskPriority, setTaskPriority] = useState("Low");
-    const [members, setMembers] = useState<IFacepilePersona[]>([]);
+    const [members, setMembers] = useState<any>(taskMembers);
     const [startDate, setStartDate] = useState(startDateVal);
     const [dueDate, setDueDate] = useState(endDateVal);
 
@@ -102,13 +101,14 @@ const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
     }
 
     function addMemberHandler(member: IFacepilePersona) {
-        console.log('addMemberHandler called...');
+        console.log('addMemberHandler called...', members);
         setMembers([...members, member]);
+        console.log('All task members are ', members);
     }
 
     function removeMemberHandler(member: IFacepilePersona) {
         console.log('removeMemberHandler called...');
-        setMembers(members.filter(m => m.personaName !== member.personaName));
+        setMembers(members.filter((m: any) => m.personaName !== member.personaName));
     }
 
     function setStartDateHandler(date: string) {
@@ -125,7 +125,7 @@ const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
 
     const taskContextValue: TaskContextType = {
         name: taskName,
-        members: taskMembers,
+        members: members,
         tags: tags,
         taskComments: taskComments,
         taskStatus: taskStatus,

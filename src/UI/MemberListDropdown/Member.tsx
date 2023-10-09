@@ -7,9 +7,6 @@ import Classes from "./Member.module.css";
 
 const Member: React.FC<{addMemberListener: (personDetails: IFacepilePersona) => void, personDetails: IFacepilePersona}> = (props) => {
 
-
-    console.log('props.personDetails', props.personDetails);
-
     const personaProps: IPersonaProps = {
         imageInitials: props.personDetails.imageInitials,
         text: props.personDetails.personaName

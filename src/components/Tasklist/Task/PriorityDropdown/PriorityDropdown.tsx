@@ -25,7 +25,7 @@ const PriorityDropdown: React.FC = () => {
                 <div className={Classes.prgrsDrpdwn}>
                     {taskPriorityArr.map(priority => {
                         return (
-                            <div onClick={(event: React.MouseEvent<HTMLDivElement>) => {changePriorityHandler(priority)}}>
+                            <div key={priority} onClick={(event: React.MouseEvent<HTMLDivElement>) => {changePriorityHandler(priority)}}>
                                 <div>
                                     <TaskPriorityIcon priority={priority} /></div>
                                 <div>{ priority }</div>

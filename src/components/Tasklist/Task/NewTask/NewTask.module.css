@@ -1,0 +1,58 @@
+.taskCard {
+    box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px, rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0px;
+    background-color: rgb(255, 255, 255);
+    flex: 0 0 auto;
+    min-height: 10px;
+    min-width: 0px;
+    display: flex;
+    flex-flow: column nowrap;
+    border-radius: 3px;
+    width: 100%;
+    position: relative;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.addTaskBtn {
+    background-color: rgb(49, 132, 86);
+    color: rgb(255, 255, 255);
+    border: 1px solid rgb(49, 132, 86);
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.nameField {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.nameField > input {
+    width: 100%;
+}
+
+.taskName {
+    border: 0px;
+    border-bottom: 2px solid rgb(49, 132, 86);
+    border-radius: 3px 3px 0 0;
+    background-color: #f2f2f2;
+    margin: 5px;
+}
+
+.dueDateField {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: rgb(50, 49, 48);
+    padding: 5px;
+}
+
+.assignToField {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 14px;
+    color: rgb(50, 49, 48);
+    padding: 5px;
+}

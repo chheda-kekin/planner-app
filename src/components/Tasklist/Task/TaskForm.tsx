@@ -1,21 +1,23 @@
-import { useState, useContext, useRef, useCallback, ReactNode } from 'react';
+import { useState, useContext } from 'react';
 import PersonPicker from '../../../UI/PersonPicker/PersonPicker';
 import LabelPickerDropdown from './LabelPickerDropdown/LabelPickerDropdown';
 import LabelPill from './LabelPickerDropdown/LabelPill';
 import ProgressDropdown from './ProgressDropdown/ProgressDropdown';
+import PriorityDropdown from './PriorityDropdown/PriorityDropdown';
 import DatePickerField from '../../../UI/DatePickerField/DatePickerField';
 import DescriptionField from './DescriptionField/DescriptionField';
 import CommentBox from './CommentBox/CommentBox';
 import { Checkbox } from "@mui/material";
 
+import { FacepilePersona } from '../../../UI/PersonPicker/FacepilePersona';
 import { LabelColors, LabelFontColors } from '../../../constants';
 import TaskContext from './task-context';
-import PriorityDropdown from './PriorityDropdown/PriorityDropdown';
+
 
 import Classes from './TaskForm.module.css';
 import AppClasses from '../../../App.module.css';
 import { Tag20Regular, Dismiss16Regular, MoreHorizontal16Regular } from "@fluentui/react-icons";
-import { initializeIcons } from "@fluentui/react";
+import { initializeIcons, IFacepilePersona } from "@fluentui/react";
 
 initializeIcons();
 
@@ -24,8 +26,9 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
     const [shwLblPickrDrpdwn, setShwLblPickrDrpdwn] = useState(false);
 
     const tskCtx = useContext(TaskContext);
+    const persons = tskCtx.members;
 
-    console.log('Task Context', tskCtx);
+    const members = FacepilePersona;
 
     // const labelPickrRef = useRef<HTMLDivElement | undefined>();
 
@@ -36,6 +39,17 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
         },
         padding: 0
     };
+
+    const toggleMemberListHandler = (personDetails: IFacepilePersona): void => {
+        if (persons.findIndex(person => person.personaName === personDetails.personaName) === -1) {
+            console.log('PersonPicker toggleMemberListHandler called...');
+            // setPersons([...persons, personDetails]);
+            tskCtx.onAddMember(personDetails);
+        } else {
+            // setPersons(persons.filter(person => person.personaName !== personDetails.personaName));
+            tskCtx.onRemoveMember(personDetails);
+        }
+    }
 
     const getLabelPills = (): React.ReactNode => {
 
@@ -64,11 +78,6 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
         console.log(`Task context is ${JSON.stringify(tskCtx)}`);
     }
 
-    const hideLabelPickerHandler = () => {
-        setShwLblPickrDrpdwn(false);
-        console.log(`Show label picker dropdown value ${shwLblPickrDrpdwn}`);
-    };
-
     return (
                 <div className={Classes.dialog}>
                         <div className={Classes.dialogHeader}>
@@ -96,7 +105,7 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                                 <div className={Classes.lastModifiedSection}>Last changed 2 hours ago by you</div>
                                 <div className={Classes.assignedToUsers}>
                                     <div className={Classes.assigneeRow}>
-                                        <PersonPicker />
+                                        <PersonPicker taskMembers={persons}  teamMembers={members} toggleMemberListHandler={toggleMemberListHandler} />
                                     </div>
                                 </div>
                                 <div className={Classes.labelPickerArea}>
@@ -104,12 +113,12 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                                         <div className={Classes.labelPickerIcon}>
                                             <Tag20Regular color="rgb(96, 94, 92)" />
                                         </div>
-                                        <div className={Classes.labelPicker} onClick={() => setShwLblPickrDrpdwn(true)}>
+                                        <div className={Classes.labelPicker} onClick={() => setShwLblPickrDrpdwn(prevVal=> ! prevVal)}>
                                             <div className={Classes.labelPickerField}>
                                                 {getLabelPills()}
                                                 <div className={Classes.labelPickerFieldGrp}>
                                                     <input type="text" placeholder="Search for label" />
-                                                    {shwLblPickrDrpdwn && <LabelPickerDropdown onLabelRowClickListener={hideLabelPickerHandler} />}
+                                                    {shwLblPickrDrpdwn && <LabelPickerDropdown />}
                                                 </div>
                                             </div>
                                         </div>

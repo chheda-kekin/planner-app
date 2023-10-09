@@ -1,8 +1,4 @@
 import React, { useState, useContext } from "react";
-import {
-    Circle20Regular, CircleHalfFill20Regular,
-    CheckmarkCircle20Filled
-} from "@fluentui/react-icons";
 import TaskStatusIcon from "../../../../UI/TaskStatusIcon/TaskStatusIcon";
 
 import { TaskStatus } from "../../../../constants";
@@ -30,7 +26,7 @@ const ProgressDropdown: React.FC = () => {
                 <div className={Classes.prgrsDrpdwn}>
                     {taskStatusArr.map(status => {
                         return (
-                            <div onClick={(event: React.MouseEvent<HTMLDivElement>) => {changeStatusHandler(status)}}>
+                            <div key={status} onClick={(event: React.MouseEvent<HTMLDivElement>) => {changeStatusHandler(status)}}>
                                 <div><TaskStatusIcon status={status} /></div>
                                 <div>{ status }</div>
                             </div>  

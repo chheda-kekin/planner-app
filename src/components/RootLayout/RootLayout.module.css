@@ -6,8 +6,8 @@
 
 .outlet {
     width: 80%;
-    height: -moz-fit-content;
-    height: fit-content;
+    /* height: -moz-fit-content; */
+    /* height: fit-content; */
     min-height: -webkit-fill-available;
     min-height: 100%;
     color: #323130;

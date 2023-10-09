@@ -1,6 +1,5 @@
 import React, { useState, useRef, useContext } from "react";
 import TaskContext from "../task-context";
-import { validateInputString } from "../../../../helper";
 import { Edit20Regular } from "@fluentui/react-icons";
 
 import Classes from './LabelRow.module.css';
@@ -10,8 +9,7 @@ type LabelRowProps = {
     color: string,
     labelName: string,
     displayEdtLblDlg: boolean | undefined,
-    edtLblClickHandler: (name: string) => void,
-    clkLblRwHandler: () => void
+    edtLblClickHandler: (name: string) => void
 };
 
 const LabelRow: React.FunctionComponent<LabelRowProps> = (props) => {
@@ -49,7 +47,6 @@ const LabelRow: React.FunctionComponent<LabelRowProps> = (props) => {
         if(labelDivRef.current) {
             taskContext.onAddTag({color: labelName, name: labelDivRef.current!.textContent});
         }
-        props.clkLblRwHandler();
     }
 
     return (

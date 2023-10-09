@@ -1,24 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import MemberListDropdown from '../MemberListDropdown/MemberListDropdown';
-import { FacepilePersona } from './FacepilePersona';
-import { people, mru, facepilePersonas } from '@fluentui/example-data';
-import {  PersonaSize, IPersonaProps, PersonaInitialsColor } from '@fluentui/react/lib/Persona';
+import {  PersonaSize } from '@fluentui/react/lib/Persona';
 import { PersonAdd20Regular } from "@fluentui/react-icons";
 import { initializeIcons } from '@fluentui/react';
 import { Facepile, IFacepilePersona } from '@fluentui/react/lib/Facepile';
 
-import TaskContext from '../../components/Tasklist/Task/task-context';
 import Classes from './PersonPicker.module.css';
 
 initializeIcons();
 
-const PersonPicker: React.FC = () => {
-    const members = FacepilePersona;
-    // const [persons, setPersons] = useState<IFacepilePersona[]>([]);
+const PersonPicker: React.FC<{taskMembers: IFacepilePersona[], teamMembers: IFacepilePersona[], toggleMemberListHandler: (memberDetails: IFacepilePersona) => void}> = (props) => {
+    
     const [showMemberListDropdown, setShowMemberListDropdown] = useState(false);
 
-    const tskCntxt = useContext(TaskContext);
-    const persons = tskCntxt.members;
+    useEffect(() => {
+        return () => {
+            setShowMemberListDropdown(false);
+        };
+    }, []);
 
     const addButtonProps = {
         ariaLabel: 'Add member to the task',
@@ -26,32 +25,21 @@ const PersonPicker: React.FC = () => {
         }
     };
 
-    const toggleMemberListHandler = (personDetails: IFacepilePersona): void => {
-        if (persons.findIndex(person => person.personaName === personDetails.personaName) === -1) {
-            console.log('PersonPicker toggleMemberListHandler called...');
-            // setPersons([...persons, personDetails]);
-            tskCntxt.onAddMember(personDetails);
-        } else {
-            // setPersons(persons.filter(person => person.personaName !== personDetails.personaName));
-            tskCntxt.onRemoveMember(personDetails);
-        }
-    }
-
     return (
         <>
-            <div className={Classes.dropdown}>
+            <div className={Classes.dropdown} onBlur={() => setShowMemberListDropdown(false)}>
                 <div className={Classes.addMember} onClick={() => setShowMemberListDropdown(prevVal => ! prevVal)}>
                     <div className={Classes.addMemberBtn}>
                         <PersonAdd20Regular  color="rgb(50, 49, 48)" />
                     </div>
                     <Facepile
-                        personas={tskCntxt.members}
+                        personas={props.taskMembers}
                         addButtonProps={addButtonProps}
                         maxDisplayablePersonas={5}
                         personaSize={PersonaSize.size24}
                     />
                 </div>
-                {showMemberListDropdown && <MemberListDropdown people={members} toggleDropdownHandler={toggleMemberListHandler} />}
+                {showMemberListDropdown && <MemberListDropdown members={props.teamMembers} toggleDropdownHandler={props.toggleMemberListHandler} />}
             </div>
         </>
     )
