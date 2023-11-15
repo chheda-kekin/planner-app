@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { PlannerState } from "../../Store";
 // import Modal from "../../UI/Modal";
 import Modal from '@mui/material/Modal';
 import Classes from "./Sidebar.module.css";
@@ -12,6 +14,16 @@ initializeIcons();
 const Sidebar: React.FC = () => {
 
     const navigate = useNavigate();
+
+    const plans = useSelector((state: PlannerState) => {
+        return state.plans;
+    });
+
+    useEffect(() => {
+        console.log('### Empty plans', plans.filter(plan => {
+            return plan.notStarted + plan.inProgress + plan.completed === 0
+        }));
+    }, [plans]);
 
     const [showNewPlanModal, setShowNewPlanModal] = useState(false);
 

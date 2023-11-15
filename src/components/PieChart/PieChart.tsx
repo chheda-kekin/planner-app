@@ -6,31 +6,34 @@ import Classes from "./PieChart.module.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const data = {
-  labels: [
-    'Red',
-    'Blue',
-    'Yellow'
-  ],
-  datasets: [{
-    label: 'My First Dataset',
-    data: [300, 50, 100],
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
-    hoverOffset: 4
-  }]
-};
 
-const options = {
-  cutout: '75%'
-}
-  
+const PieChart: React.FC<{inProgress: number, notStarted: number, completed: number, due: number}> = (props) => {
 
+    const { inProgress, notStarted, completed, due } = props;
 
-const PieChart: React.FC = () => {
+    const data = {
+      labels: [
+        'Not Started',
+        'In Progress',
+        'Completed',
+        'Due'
+      ],
+      datasets: [{
+        label: 'Tasks',
+        data: [notStarted, inProgress, completed, due],
+        backgroundColor: [
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          'rgb(0, 77, 26)',
+          'rgb(255, 99, 132)'
+        ],
+        hoverOffset: 4
+      }]
+    };
+
+    const options = {
+      cutout: '85%'
+    };
 
     return (
       <>

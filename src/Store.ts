@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 const PlannerStore = configureStore({
     reducer: {
-        plan: planSlice.reducer
+        plans: planSlice.reducer
     }
 });
 

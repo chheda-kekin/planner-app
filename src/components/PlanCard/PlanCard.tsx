@@ -6,7 +6,7 @@ import PushPinIcon from '@mui/icons-material/PushPin';
 import Classes from "./PlanCard.module.css";
 import PieChart from "../PieChart/PieChart";
 
-const PlanCard:React.FC<{planName: string}> = (props) => {
+const PlanCard:React.FC<{planName: string, notStarted: number, inProgress: number, completed: number, due: number}> = (props) => {
 
     const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ const PlanCard:React.FC<{planName: string}> = (props) => {
                     </div>
                 </div>
                 <div className={Classes.cardBody}>
-                    <PieChart />
+                    <PieChart notStarted={props.notStarted} inProgress={props.inProgress} completed={props.completed} due={props.due} />
                 </div>
             </div>
         </>

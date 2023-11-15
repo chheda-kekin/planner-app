@@ -15,7 +15,7 @@ const NewPlan: React.FC<{ onCloseModal: () => void }> = (props) => {
         if (enteredPlanName === "") {
             return new Error("Plan name can't be empty");
         } else {
-            dispatchAction(planActions.addPlan(enteredPlanName));
+            // dispatchAction(planActions.addPlan(enteredPlanName));
             props.onCloseModal();
         }
     }

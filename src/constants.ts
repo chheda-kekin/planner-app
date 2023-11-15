@@ -33,9 +33,9 @@ export const MonthNames = ["January", "February", "March", "April", "May", "June
 ];
 
 export const TaskStatus = {
-    'Not Started': '0',
-    'In Progress': '1',
-    'Completed': '2'
+    'Not Started': '1',
+    'In Progress': '2',
+    'Completed': '3'
 };
 
 export enum TaskPriority {
@@ -84,7 +84,16 @@ export type TaskComment = {
     personaProps: IPersonaSharedProps,
     commentDate: Date,
     initialsColor: PersonaInitialsColor
-}
+};
+
+export type Plan = {
+    id: number,
+    name: string,
+    notStarted: number,
+    inProgress: number,
+    completed: number,
+    due: number
+};
 
 export const LabelProps: LabelProp[] = [
 
@@ -130,4 +139,4 @@ export const LabelProps: LabelProp[] = [
     }
 ];
 
-// export enum Task
+export const baseUrl = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_API_URL : process.env.REACT_APP_PROD_API_URL;
