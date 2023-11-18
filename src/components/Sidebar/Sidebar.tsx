@@ -8,21 +8,22 @@ import NewPlan from "../NewPlan/NewPlan";
 import { useNavigate } from "react-router-dom";
 import { initializeIcons } from "@fluentui/react";
 
-import { Add24Regular, Home24Regular, Person24Regular } from "@fluentui/react-icons";
+import { Add24Regular, Home24Regular, Person24Regular, 
+    ChevronRight12Filled, ChevronDown12Filled } from "@fluentui/react-icons";
 initializeIcons();
 
 const Sidebar: React.FC = () => {
 
     const navigate = useNavigate();
 
+    const [isExpanded, setIsExpanded] = useState(false);
+
     const plans = useSelector((state: PlannerState) => {
         return state.plans;
     });
 
     useEffect(() => {
-        console.log('### Empty plans', plans.filter(plan => {
-            return plan.notStarted + plan.inProgress + plan.completed === 0
-        }));
+        console.log('### Empty plans');
     }, [plans]);
 
     const [showNewPlanModal, setShowNewPlanModal] = useState(false);
@@ -33,6 +34,14 @@ const Sidebar: React.FC = () => {
 
     function closeModalHandler() {
         setShowNewPlanModal(false);
+    }
+
+    function getEmptyPlansList() {
+        return plans.filter(plan => (plan.notStarted + plan.inProgress + plan.completed === 0))
+            .map(plan => (
+                    <div className={Classes.emptyPlans} key={plan.id} onClick={() => navigate(`planboard/${plan.id}`)}>
+                        { plan.name }
+                    </div>));
     }
 
     return (
@@ -61,6 +70,17 @@ const Sidebar: React.FC = () => {
                     </div>&nbsp;&nbsp;
                     <div>Assigned to Me</div>
                 </div>
+                {/* Emply plans list */}
+                <div className={Classes.plansWrapper}>
+                    <div className={Classes.plansDiv} onClick={() => setIsExpanded(current => !current)}>
+                        <div style={{marginRight: '5px'}}>
+                            { isExpanded? <ChevronDown12Filled /> : <ChevronRight12Filled /> }
+                        </div>
+                        <div>Plans</div>
+                    </div>
+                    { isExpanded && getEmptyPlansList() }
+                </div>
+                {/* Empty plans list ends */}
             </div>
         </>
     );

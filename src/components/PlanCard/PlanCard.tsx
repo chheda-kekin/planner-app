@@ -6,7 +6,7 @@ import PushPinIcon from '@mui/icons-material/PushPin';
 import Classes from "./PlanCard.module.css";
 import PieChart from "../PieChart/PieChart";
 
-const PlanCard:React.FC<{planName: string, notStarted: number, inProgress: number, completed: number, due: number}> = (props) => {
+const PlanCard:React.FC<{id: number, planName: string, notStarted: number, inProgress: number, completed: number, due: number}> = (props) => {
 
     const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ const PlanCard:React.FC<{planName: string, notStarted: number, inProgress: numbe
 
     return (
         <>
-            <div className={Classes.planCard} onClick={() => navigate("/planboard")}>
+            <div className={Classes.planCard} onClick={() => navigate(`/planboard/${props.id}`)}>
                 <div className={Classes.cardHeader}>
                     <div className={Classes.tileIcon}>{getPlanAbbreviations(props.planName)}</div>
                     <div className={Classes.headerContent}>

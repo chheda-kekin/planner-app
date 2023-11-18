@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import { TaskStatus } from "../../constants";
 import Tasklist from "../Tasklist/Tasklist";
 import AddTaskButton from "./AddTaskButton/AddTaskButton";
@@ -6,6 +7,9 @@ import Classes from "./PlanTaskboard.module.css";
 
 const PlanTaskboard: React.FC = () => {
 
+    
+    const { id } = useParams();
+    
     const displayModal = (): void => {
         // setShowModal(true);
     }

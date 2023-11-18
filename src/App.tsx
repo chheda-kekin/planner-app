@@ -22,7 +22,7 @@ const App: React.FC = () => {
   const RoutesArr: RouteObject[] = [
     {path: "planhub", element: <Main />},
     {path: "userboard", element: <UserBoard />},
-    {path: "planboard", element: <PlanTaskboard />}
+    {path: "planboard/:id", element: <PlanTaskboard />}
   ];
 
   const router = createBrowserRouter([

@@ -41,3 +41,43 @@
 .matIcon {
     color: rgb(49, 132, 86);
 }
+
+.plansWrapper {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    margin-top: 50%;
+}
+
+.plansDiv {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-weight: 600;
+    cursor: pointer;
+    color: rgb(33, 115, 70);
+    padding-left: 3%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+.emptyPlans {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    padding-left: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.emptyPlans:hover {
+    background-color: rgb(237, 235, 233);
+    /* color: rgb(33, 115, 70); */
+}
+
+.emptyPlans:active {
+    background-color: rgb(237, 235, 233);
+    color: rgb(33, 115, 70);
+}
