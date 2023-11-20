@@ -3,19 +3,29 @@ import Classes from "./NewPlan.module.css";
 import AppClasses from "../../App.module.css";
 import { usePlannerDispatch } from "../../Store";
 import { planActions } from "../../slices/plan-slice";
+import { savePlan } from "../../slices/plan-slice";
+import { Plan } from "../../constants";
 
 const NewPlan: React.FC<{ onCloseModal: () => void }> = (props) => {
 
-    const dispatchAction = usePlannerDispatch()
+    const dispatchAction = usePlannerDispatch();
 
     const planInputRef = useRef<HTMLInputElement>(null);
 
     const savePlanHandler = () => {
-        const enteredPlanName = planInputRef.current!.value
+        const enteredPlanName = planInputRef.current!.value;
         if (enteredPlanName === "") {
             return new Error("Plan name can't be empty");
         } else {
-            // dispatchAction(planActions.addPlan(enteredPlanName));
+            let enteredPlan: Plan = {
+                id: 0,
+                name: enteredPlanName,
+                notStarted: 0,
+                inProgress: 0,
+                completed: 0,
+                due: 0
+            }
+            dispatchAction(savePlan(enteredPlan));
             props.onCloseModal();
         }
     }

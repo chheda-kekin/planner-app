@@ -1,12 +1,14 @@
 .Sidebar {
     width: 25%;
-    height: 100vh;
+    height: 100%;
     color: rgb(50, 49, 48);
     font-size: 14px;
     display: flex;
     flex-direction: column;
     align-items: baseline;
     /* position: fixed; */
+    /* top: 0; */
+    /* left: 0; */
 }
 
 .Sidebar_items {
