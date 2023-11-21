@@ -15,7 +15,6 @@ loadPlans: (state: Plan[], action: PayloadAction<Plan[]>) => void}>({
             state.push(action.payload);
         },
         loadPlans: (state: Plan[], action: PayloadAction<Plan[]>) => {
-            console.log('### loadPlans invoked', action.payload);
             action.payload.forEach(plan => state.push(plan));
         }
     }

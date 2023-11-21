@@ -112,13 +112,11 @@ const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
     }
 
     function setStartDateHandler(date: string) {
-        console.log(`Start date is: ${date}`);
         const dtObj = new Date(date);
         setStartDate(dtObj.getTime());
     }
 
     function setDueDateHandler(date: string) {
-        console.log(`Due date is ${date}`);
         const dtObj = new Date(date);
         setDueDate(dtObj.getTime());
     }

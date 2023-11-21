@@ -95,6 +95,22 @@ export type Plan = {
     due: number
 };
 
+export type Label = {
+    color: string;
+    value: string;
+}
+
+export type TaskType = {
+    id: number,
+    planId: number,
+    planName: string
+    name: string,
+    status: string,
+    due: number,
+    members: {memberId: number, firstName: string, lastName: string}[],
+    labels: Label[]
+};
+
 export const LabelProps: LabelProp[] = [
 
     {

@@ -42,7 +42,6 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
 
     const toggleMemberListHandler = (personDetails: IFacepilePersona): void => {
         if (persons.findIndex(person => person.personaName === personDetails.personaName) === -1) {
-            console.log('PersonPicker toggleMemberListHandler called...');
             // setPersons([...persons, personDetails]);
             tskCtx.onAddMember(personDetails);
         } else {

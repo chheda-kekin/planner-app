@@ -23,7 +23,6 @@ const Sidebar: React.FC = () => {
     });
 
     useEffect(() => {
-        console.log('### Empty plans');
     }, [plans]);
 
     const [showNewPlanModal, setShowNewPlanModal] = useState(false);
