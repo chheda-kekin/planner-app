@@ -28,10 +28,6 @@ const PlanTaskboard: React.FC = () => {
         fetchTasksByPlanId();
 
     }, []);
-    
-    const displayModal = (): void => {
-        // setShowModal(true);
-    }
 
     const getMembersLookup = (): Map<number, number> => {
         return tasks.reduce((acc: Map<number, number>, task) => {
@@ -47,10 +43,6 @@ const PlanTaskboard: React.FC = () => {
     return (
     <>
         <div className={Classes.taskboard}>
-                {/* <div className={Classes.navigation}>
-                    <TileIcon bgcolor="#bf0077">KC</TileIcon>
-                    <div className={Classes.title}>Assigned to me</div>
-                </div> */}
                 <div className={Classes.allLists}>
                     {Object.keys(TaskStatus).map((status) => {
                         return (
@@ -60,8 +52,7 @@ const PlanTaskboard: React.FC = () => {
                                 status={status} 
                                 tasks={tasks.filter(task => task.status === status)} 
                                 displayAddTaskButton={true} 
-                                personaColorCodes={personaColorCodes} 
-                                displayModal={displayModal} />
+                                personaColorCodes={personaColorCodes} />
                         </>
                     )
                     })}

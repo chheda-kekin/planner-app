@@ -7,6 +7,7 @@
     "@emotion/styled": "^11.10.6",
     "@fluentui/example-data": "^8.4.7",
     "@fluentui/react": "^8.107.0",
+    "@fluentui/react-components": "^9.41.0",
     "@fluentui/react-icons": "^2.0.198",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.13",

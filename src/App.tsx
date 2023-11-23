@@ -4,6 +4,7 @@ import RootLayout from './components/RootLayout/RootLayout';
 import Main from "./components/Main/Main";
 import UserBoard from './components/UserBoard/UserBoard';
 import PlanTaskboard from './components/PlanTaskboard/PlanTaskboard';
+import Notification from './components/Notification/Notification';
 import Classes from './App.module.css';
 import { createBrowserRouter, RouterProvider, RouteObject } from 'react-router-dom';
 import { getAllPlans } from './slices/plan-slice';
@@ -31,7 +32,8 @@ const App: React.FC = () => {
 
   return (
     <div ref={appRef} className={Classes.App}>
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
+        <Notification />
     </div>
   );
 }

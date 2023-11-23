@@ -108,8 +108,15 @@ export type TaskType = {
     status: string,
     due: number,
     members: {memberId: number, firstName: string, lastName: string}[],
-    labels: Label[]
+    labels: string
 };
+
+export enum MessageType {
+    Success = 'success',
+    Error = 'error',
+    Info = 'info',
+    Warning = 'warning'
+}
 
 export const LabelProps: LabelProp[] = [
 

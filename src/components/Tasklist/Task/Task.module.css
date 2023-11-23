@@ -25,6 +25,13 @@
     min-height: 0;
 }
 
+
+.planNameRow {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
 .planName {
     display: flex;
     flex: 0 0 auto;
@@ -38,38 +45,58 @@
     margin-top: -5px;
 }
 
-.moreOptions {
+.taskActionsContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
     position: absolute;
     right: 5px;
     top: 2px;
+    padding: 5px;
 }
 
-.taskMenu {
+.taskActions {
+    margin: 2px;
+}
+
+/* .actionsContainer {
     display: flex;
+    flex-direction: column;
+    width: 55%;
     box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px, rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    position: absolute;
+    color: rgb(50, 49, 48);
     font-weight: 400;
     font-size: 14px;
     font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
-    color: rgb(50, 49, 48);
-    z-index: 1000000;
-    border-radius: 2px;
-    box-sizing: border-box;
-    width: 75%;
-    position: absolute;
-    opacity: 1;
-    /* left: 234px; */
+    z-index: 9999999 !important;
+    opacity: 1 !important;
+    right: 0;
+    left: 266px;
+    padding: 5px;
 }
 
-.container {
-    position: relative;
-}
+.taskActionsMenu {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    padding: 5px;
+    box-sizing: border-box;
+} */
+
+/* .taskActionsMenu:hover {
+    background-color: rgb(237, 235, 233);
+} */
 
 .titleRow {
     display: flex;
     flex: 0 0 auto;
     flex-flow: row nowrap;
+    align-items: center;
     min-height: 0px;
-    min-width: 0px;
+    min-width: 100%;
 }
 
 .title {
@@ -96,10 +123,19 @@
     border-radius: 10px;
 }
 
+.hrDiv {
+    width: 100%;
+    height: 1px;
+    padding: 0px;
+    border: 1px solid rgb(237, 235, 233);
+    box-sizing: border-box;
+}
+
 .bottomBar {
     display: flex;
+    width: 100%;
     flex-flow: row nowrap;
-    border-top: 1px solid rgb(237, 235, 233);
+    /* border-top: 1px solid rgb(237, 235, 233); */
     justify-content: space-between;
 }
 
@@ -123,4 +159,10 @@
 .dateLabel {
     display: flex;
     align-items: center;
+}
+
+.labelRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }

@@ -11,8 +11,7 @@ type TaskListProps = {
     status: string, 
     tasks: TaskType[], 
     displayAddTaskButton: boolean,
-    personaColorCodes: Map<number, number>, 
-    displayModal: () => void 
+    personaColorCodes: Map<number, number> 
 };
 
 const Tasklist: React.FC<TaskListProps> = (props) => {
@@ -24,6 +23,7 @@ const Tasklist: React.FC<TaskListProps> = (props) => {
     }
 
     const getTasks = () => {
+        console.log('### props.tasks', props.tasks);
         return props.tasks.map(task => {
             return (
                 <Task id={task.id} 
@@ -33,8 +33,7 @@ const Tasklist: React.FC<TaskListProps> = (props) => {
                     dueDate={task.due}
                     members={task.members}
                     labels={task.labels}
-                    personaColorCodes={props.personaColorCodes}
-                    displayModal={props.displayModal} />
+                    personaColorCodes={props.personaColorCodes} />
             );
         })
     }
