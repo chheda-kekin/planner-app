@@ -1,11 +1,36 @@
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Member from './Member';
-import { IFacepilePersona } from "@fluentui/react";
+import { TaskMember, baseUrl } from '../../constants';
+import { getTaskMembers } from '../../helper';
 import Classes from "./MemberListDropdown.module.css";
+import axios from 'axios';
 
-const MemberListDropdown: React.FunctionComponent<{ toggleDropdownHandler: (personDetails: IFacepilePersona) => void, members: IFacepilePersona[] }> = (props) => {
-    
-    const addMemberListener = (personDetails: IFacepilePersona) => {
-        props.toggleDropdownHandler(personDetails);
+type MemberListDropdownPropsType = {
+    selectMemberHandler: (member: TaskMember) => void
+}
+
+const MemberListDropdown: React.FC<MemberListDropdownPropsType> = ({ selectMemberHandler }) => {
+
+    const [searchKey, setSearchKey]  = useState('');
+    const [allMembers, setAllMembers] = useState<Array<TaskMember>>([]);
+
+    useEffect(() => {
+
+        const timer = setTimeout(async () => {
+            // Sending request to search members API
+            const { data } = await axios.get(`${baseUrl}/members?key=${searchKey}`);
+            setAllMembers(getTaskMembers(data));    
+        }, 1000);
+
+        return () => {
+            if(timer) {
+                clearTimeout(timer);
+            }
+        }
+    }, [searchKey]);
+
+    const searchKeyChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchKey(e.target.value);
     }
 
     return (
@@ -13,14 +38,20 @@ const MemberListDropdown: React.FunctionComponent<{ toggleDropdownHandler: (pers
             <div className={Classes.dropdownContent}>
                 <div className={Classes.searchField}>
                     <div className={Classes.fieldGroup}>
-                        <input type="text" className={Classes.textField} placeholder="Type a name or email address" />
+                        <input type="text" 
+                            value={searchKey} 
+                            onChange={searchKeyChangeHandler}
+                            className={Classes.textField} 
+                            placeholder="Type a name or email address" />
                     </div>
                 </div>
                 <div className={Classes.userListSection}>
                     <div className={Classes.sectionTitle}>Suggestions</div>
                     <div className={Classes.userList}>
-                        {props.members.map(people => {
-                            return <Member key={people.personaName} addMemberListener={addMemberListener} personDetails={people} />
+                        {allMembers.map(m => {
+                            return <Member key={m.id}  
+                                        selectMemberHandler={selectMemberHandler} 
+                                        personDetails={m} />
                         })}
                     </div>
                 </div>

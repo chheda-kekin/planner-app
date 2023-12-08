@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MemberListDropdown from '../MemberListDropdown/MemberListDropdown';
+import { TaskMember } from '../../constants';
 import {  PersonaSize } from '@fluentui/react/lib/Persona';
 import { PersonAdd20Regular } from "@fluentui/react-icons";
 import { initializeIcons } from '@fluentui/react';
@@ -9,7 +10,12 @@ import Classes from './PersonPicker.module.css';
 
 initializeIcons();
 
-const PersonPicker: React.FC<{taskMembers: IFacepilePersona[], teamMembers: IFacepilePersona[], toggleMemberListHandler: (memberDetails: IFacepilePersona) => void}> = (props) => {
+type PersonPickerProps = {
+    selectedMembers: TaskMember[],
+    selectMemberHandler: (member: TaskMember) => void
+};
+
+const PersonPicker: React.FC<PersonPickerProps> = (props) => {
     
     const [showMemberListDropdown, setShowMemberListDropdown] = useState(false);
 
@@ -25,21 +31,30 @@ const PersonPicker: React.FC<{taskMembers: IFacepilePersona[], teamMembers: IFac
         }
     };
 
+    const members = props.selectedMembers.map(m => {
+        return {
+            personaName: m.personaName,
+            imageInitials: m.imageInitials,
+            initialsColor: m.initialsColor
+        } as IFacepilePersona;
+    });
+
     return (
         <>
-            <div className={Classes.dropdown} onBlur={() => setShowMemberListDropdown(false)}>
+            <div className={Classes.dropdown}>
                 <div className={Classes.addMember} onClick={() => setShowMemberListDropdown(prevVal => ! prevVal)}>
                     <div className={Classes.addMemberBtn}>
                         <PersonAdd20Regular  color="rgb(50, 49, 48)" />
                     </div>
                     <Facepile
-                        personas={props.taskMembers}
+                        personas={members}
                         addButtonProps={addButtonProps}
                         maxDisplayablePersonas={5}
                         personaSize={PersonaSize.size24}
                     />
                 </div>
-                {showMemberListDropdown && <MemberListDropdown members={props.teamMembers} toggleDropdownHandler={props.toggleMemberListHandler} />}
+                {showMemberListDropdown && 
+                    <MemberListDropdown selectMemberHandler={props.selectMemberHandler} />}
             </div>
         </>
     )

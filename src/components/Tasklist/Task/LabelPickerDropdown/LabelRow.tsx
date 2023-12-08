@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useContext } from "react";
 import TaskContext from "../task-context";
 import { Edit20Regular } from "@fluentui/react-icons";
 
@@ -8,17 +8,16 @@ type LabelRowProps = {
     backgroundColor: string,
     color: string,
     labelName: string,
-    displayEdtLblDlg: boolean | undefined,
-    edtLblClickHandler: (name: string) => void
+    displayDialog: boolean,
+    editLabelClickHandler: (labelName: string) => void
 };
 
-const LabelRow: React.FunctionComponent<LabelRowProps> = (props) => {
+const LabelRow: React.FC<LabelRowProps> = (props) => {
     
-    const { backgroundColor, color, labelName, displayEdtLblDlg, edtLblClickHandler } = props;
+    const { backgroundColor, color, labelName, displayDialog, editLabelClickHandler } = props;
 
-    const [labelValue, setLabelValue] = useState("");
+    const [labelValue, setLabelValue] = useState(labelName);
     const taskContext = useContext(TaskContext);
-    const labelDivRef = useRef<HTMLDivElement>(null);
 
     const labelStyles = {
         backgroundColor: backgroundColor,
@@ -29,35 +28,35 @@ const LabelRow: React.FunctionComponent<LabelRowProps> = (props) => {
     };
 
     const onBlurListener = (): void => {
-        if(labelValue !== "") {
-            labelDivRef.current!.textContent = labelValue;
-        }
-        edtLblClickHandler(labelName);
+        editLabelClickHandler(labelName);
     }
 
     const chngLblListener = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setLabelValue(e.target.value);
     }
 
-    const edtLblClkListener = (): void => {
-        edtLblClickHandler(labelName);
+    const edtLblClkListener = (e: React.MouseEvent<HTMLElement>): void => {
+        e.stopPropagation();
+        editLabelClickHandler(labelName);
     }
 
-    const lblRwClkListener = (e: React.MouseEvent<HTMLDivElement>): void => {
-        if(labelDivRef.current) {
-            taskContext.onAddTag({color: labelName, name: labelDivRef.current!.textContent});
-        }
+    const lblRwClkListener = (e: React.MouseEvent<HTMLElement>): void => {
+        e.stopPropagation();
+        taskContext.onAddLabel({color: labelName, value: labelValue});
+        setLabelValue(labelName);
     }
 
     return (
         <>
-            <div className={Classes.sgstnRw} role="option">
+            <div className={Classes.sgstnRw}>
                 <div className={Classes.suggestionItem}>
-                    <div className={Classes.sugstnItmBtn} role="button"> 
+                    <div className={Classes.sugstnItmBtn}> 
                         <div className={Classes.edtblLblWrpr}>
                             <div className={Classes.edtblLblWrprInner}>
                                 <div className={Classes.edtblLbl} onClick={lblRwClkListener}>
-                                    <div ref={labelDivRef} data-color={backgroundColor} style={labelStyles} className={Classes.edtblLblChp}>{labelName}</div>
+                                    <div data-color={backgroundColor} style={labelStyles} className={Classes.edtblLblChp}>
+                                        { labelValue }
+                                    </div>
                                 </div>
                                 <div onClick={edtLblClkListener} className={Classes.edtLblBtn}>
                                     <Edit20Regular height={18} width={18} />
@@ -66,18 +65,19 @@ const LabelRow: React.FunctionComponent<LabelRowProps> = (props) => {
                         </div>
                     </div>
                 </div>
-                { displayEdtLblDlg && <div className={Classes.edtLblFldWrpr} onBlur={onBlurListener}>
+                { displayDialog && <div className={Classes.edtLblFldWrpr} onBlur={onBlurListener}>
                     <div className={Classes.edtLblInner}>
                         <div className={Classes.edtLblFldLabel}>Edit label</div>
                     </div>
                     <div className={Classes.lblEdtrTxtFld}>
                         <div className={Classes.txtFldWrpr}>
                             <div className={Classes.txtFldGrp}>
-                                <input type="text" value={labelValue} onChange={chngLblListener} />
+                                <input type="text" value={labelValue} onChange={chngLblListener} 
+                                    onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()} />
                             </div>
                         </div>
                     </div>
-                </div>}
+                </div> }
             </div>
         </>
     )

@@ -9,15 +9,16 @@ import DescriptionField from './DescriptionField/DescriptionField';
 import CommentBox from './CommentBox/CommentBox';
 import { Checkbox } from "@mui/material";
 
-import { FacepilePersona } from '../../../UI/PersonPicker/FacepilePersona';
-import { LabelColors, LabelFontColors } from '../../../constants';
+import { getTimeElapsed } from '../../../helper';
+
+import { LabelColors, LabelFontColors, TaskMember } from '../../../constants';
 import TaskContext from './task-context';
 
 
 import Classes from './TaskForm.module.css';
 import AppClasses from '../../../App.module.css';
 import { Tag20Regular, Dismiss16Regular, MoreHorizontal16Regular } from "@fluentui/react-icons";
-import { initializeIcons, IFacepilePersona } from "@fluentui/react";
+import { initializeIcons } from "@fluentui/react";
 
 initializeIcons();
 
@@ -26,11 +27,21 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
     const [shwLblPickrDrpdwn, setShwLblPickrDrpdwn] = useState(false);
 
     const tskCtx = useContext(TaskContext);
-    const persons = tskCtx.members;
-
-    const members = FacepilePersona;
+    const selectedMembers = tskCtx.members;
+    const planName = tskCtx.planName.trim();
+    const lastUpdatedTime = getTimeElapsed(tskCtx.lastUpdatedDate);
+    const lastUpdatedDate = new Date(tskCtx.lastUpdatedDate);
+    
 
     // const labelPickrRef = useRef<HTMLDivElement | undefined>();
+
+    const addRemoveMemberHandler = (member: TaskMember): void => {
+        if (selectedMembers.findIndex(m => m.id === member.id) === -1) {
+            tskCtx.onAddMember(member);
+        } else {
+            tskCtx.onRemoveMember(member);
+        }
+    }
 
     const checkboxStyles = {
         color: 'rgb(33, 115, 70)',
@@ -40,41 +51,36 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
         padding: 0
     };
 
-    const toggleMemberListHandler = (personDetails: IFacepilePersona): void => {
-        if (persons.findIndex(person => person.personaName === personDetails.personaName) === -1) {
-            // setPersons([...persons, personDetails]);
-            tskCtx.onAddMember(personDetails);
-        } else {
-            // setPersons(persons.filter(person => person.personaName !== personDetails.personaName));
-            tskCtx.onRemoveMember(personDetails);
-        }
-    }
-
     const getLabelPills = (): React.ReactNode => {
 
-        return (tskCtx.tags.map(tag => {
-            const tagColor = tag.color;
+        return (tskCtx.labels.map(label => {
+            const labelColor = label.color;
             let bgColor = '';
             let color = '';
 
             for (const [key, val] of Object.entries(LabelColors)) {
-                if (key === tagColor) {
+                if (key === labelColor) {
                     bgColor = val;
                 }
             }
 
             for (const [key, val] of Object.entries(LabelFontColors)) {
-                if (key === tagColor) {
+                if (key === labelColor) {
                     color = val;
                 }
             }
 
-            return <LabelPill key={tag.name} backgroundColor={bgColor} color={color} labelName={tag.name} />
+            return <LabelPill key={label.value} 
+                backgroundColor={bgColor} color={color} labelName={label.value} />
         }))
     }
 
     const submitFormHandler = () => {
         console.log(`Task context is ${JSON.stringify(tskCtx)}`);
+    }
+
+    const toggleLabelPickerHandler = () => {
+        setShwLblPickrDrpdwn(prevVal => ! prevVal);
     }
 
     return (
@@ -92,7 +98,10 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                         </div>
                         <div className={Classes.dialogContent}>
                             <div className={Classes.taskEditor}>
-                                <div className={Classes.planTitle}>Becoming ReactJS Pro</div>
+                                {/* Plan Name */}
+                                <div className={Classes.planTitle}>
+                                    {planName}
+                                </div>
                                 <div className={Classes.taskName}>
                                     <button className={Classes.markCompleteBtn} title="Mark task as complete">
                                         <Checkbox size="small" sx={checkboxStyles} />
@@ -101,10 +110,14 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                                         <input value={tskCtx.name} onChange={(e) => { tskCtx.onTaskNameChange(e) }} />
                                     </div>
                                 </div>
-                                <div className={Classes.lastModifiedSection}>Last changed 2 hours ago by you</div>
+                                {/* Last updated time */}
+                                <div className={Classes.lastModifiedSection}>
+                                    Last changed {lastUpdatedTime} ago by you
+                                </div>
                                 <div className={Classes.assignedToUsers}>
                                     <div className={Classes.assigneeRow}>
-                                        <PersonPicker taskMembers={persons}  teamMembers={members} toggleMemberListHandler={toggleMemberListHandler} />
+                                        <PersonPicker selectedMembers={selectedMembers} 
+                                            selectMemberHandler={addRemoveMemberHandler} />
                                     </div>
                                 </div>
                                 <div className={Classes.labelPickerArea}>
@@ -112,12 +125,14 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                                         <div className={Classes.labelPickerIcon}>
                                             <Tag20Regular color="rgb(96, 94, 92)" />
                                         </div>
-                                        <div className={Classes.labelPicker} onClick={() => setShwLblPickrDrpdwn(prevVal=> ! prevVal)}>
+                                        <div className={Classes.labelPicker} onClick={toggleLabelPickerHandler}>
                                             <div className={Classes.labelPickerField}>
                                                 {getLabelPills()}
                                                 <div className={Classes.labelPickerFieldGrp}>
                                                     <input type="text" placeholder="Search for label" />
-                                                    {shwLblPickrDrpdwn && <LabelPickerDropdown />}
+                                                    <div>
+                                                        {shwLblPickrDrpdwn && <LabelPickerDropdown />}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -156,15 +171,15 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <DescriptionField dscrptn="Some random text as notes" />
+                                    <DescriptionField />
                                 </div>
                                 <div>
-                                    <CommentBox taskComments={tskCtx.taskComments} />
+                                    <CommentBox />
                                 </div>
                             </div>
                         </div>
                         <div className={Classes.dialogFooter}>
-                            <button className={AppClasses.primaryBtn} onClick={submitFormHandler}>Ok</button>
+                            <button className={AppClasses.primaryBtn} onClick={submitFormHandler}>Save</button>
                             <button className={AppClasses.cancelBtn} onClick={props.onCloseModal}>Cancel</button>
                         </div>
                 </div>

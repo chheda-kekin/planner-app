@@ -5,10 +5,12 @@ import TaskContext from '../task-context';
 
 import Classes from './CommentsBox.module.css';
 
-const CommentBox: React.FC<{taskComments: TaskComment[]}> = ({taskComments}) => {
+const CommentBox: React.FC = () => {
 
     const [commentVal, setCommentVal] = useState('');
     const tskCtx = useContext(TaskContext);
+
+    const taskComments = tskCtx.taskComments;
 
     const changeValueHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setCommentVal(e.target.value);

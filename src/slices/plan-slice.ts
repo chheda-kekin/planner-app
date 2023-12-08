@@ -5,8 +5,14 @@ import { Plan, baseUrl } from "../constants";
 
 const initialPlanState: Plan[] = [];
 type EnteredPlanType = Omit<Plan, "id">;
-const planSlice = createSlice<Plan[], { addPlan:(state: Plan[], action: PayloadAction<Plan>) => void, 
-loadPlans: (state: Plan[], action: PayloadAction<Plan[]>) => void}>({
+type PlanReducers = { 
+    addPlan:(state: Plan[], action: PayloadAction<Plan>) => void, 
+    loadPlans: (state: Plan[], action: PayloadAction<Plan[]>) => void,
+    deleteTaskFromPlan: (state: Plan[], action: PayloadAction<{id: number, status: string, isDue: boolean}>) => void,
+    addTaskToPlan: (state: Plan[], action: PayloadAction<{id: number, status: string, isDue: boolean}>) => void
+};
+
+const planSlice = createSlice<Plan[], PlanReducers>({
     name: "plan",
     initialState: initialPlanState,
     reducers: {
@@ -16,6 +22,37 @@ loadPlans: (state: Plan[], action: PayloadAction<Plan[]>) => void}>({
         },
         loadPlans: (state: Plan[], action: PayloadAction<Plan[]>) => {
             action.payload.forEach(plan => state.push(plan));
+        },
+        deleteTaskFromPlan: (state: Plan[], action: PayloadAction<{id: number, status: string, isDue: boolean}>) => {
+            const planIndex = state.findIndex(plan => plan.id === action.payload.id);
+            if(planIndex > -1) {
+                if(action.payload.status === 'Not Started') {
+                    state[planIndex].notStarted--;            
+                } else if(action.payload.status === 'In Progress') {
+                    state[planIndex].inProgress--;
+                } else {
+                    state[planIndex].completed--;
+                }
+                if(action.payload.isDue) {
+                    state[planIndex].due--;
+                }
+            }
+        },
+        addTaskToPlan: (state: Plan[], action: PayloadAction<{id: number, status: string, isDue: boolean}>) => {
+            const planIndex = state.findIndex(plan => plan.id === action.payload.id);
+            
+            if(planIndex > -1) {
+                if(action.payload.status === 'Not Started') {
+                    state[planIndex].notStarted++;            
+                } else if(action.payload.status === 'In Progress') {
+                    state[planIndex].inProgress++;
+                } else {
+                    state[planIndex].completed++;
+                }
+                if(action.payload.isDue) {
+                    state[planIndex].due++;
+                }
+            }
         }
     }
 });

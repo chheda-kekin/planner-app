@@ -14,9 +14,11 @@ initializeIcons();
 
 const Sidebar: React.FC = () => {
 
+    console.log('### Sidebar evaluated!');
+
     const navigate = useNavigate();
 
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(true);
 
     const plans = useSelector((state: PlannerState) => {
         return state.plans;

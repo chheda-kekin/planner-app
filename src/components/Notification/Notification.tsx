@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { PlannerState, usePlannerDispatch } from '../../Store';
 import { NotificationActions } from '../../slices/notification-slice';
 import Snackbar from '@mui/material/Snackbar';
-import MuiAlert, {AlertColor} from '@mui/material/Alert';
+import MuiAlert, { AlertColor } from '@mui/material/Alert';
 
 const Notification: React.FC = () => {
 
@@ -22,7 +22,8 @@ const Notification: React.FC = () => {
                 message=""
                 autoHideDuration={6000}
                 onClose={onCloseHandler}
-                open={isNotification} >
+                open={isNotification} 
+                sx={{ width: '30%'}}>
                 <MuiAlert severity={notificationType as AlertColor} sx={{ width: '100%'}}>{message}</MuiAlert>        
             </Snackbar>
         </>

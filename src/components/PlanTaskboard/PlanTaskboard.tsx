@@ -27,18 +27,7 @@ const PlanTaskboard: React.FC = () => {
 
         fetchTasksByPlanId();
 
-    }, []);
-
-    const getMembersLookup = (): Map<number, number> => {
-        return tasks.reduce((acc: Map<number, number>, task) => {
-            task.members.forEach(member => {
-                acc.set(member.memberId, Math.floor(Math.random()*24));
-            });
-            return acc;
-        }, new Map<number, number>());    
-    }
-
-    const personaColorCodes = getMembersLookup();
+    }, [id]);
 
     return (
     <>
@@ -51,8 +40,7 @@ const PlanTaskboard: React.FC = () => {
                                 key={status}
                                 status={status} 
                                 tasks={tasks.filter(task => task.status === status)} 
-                                displayAddTaskButton={true} 
-                                personaColorCodes={personaColorCodes} />
+                                displayAddTaskButton={status.trim().toLowerCase() !== "completed"} />
                         </>
                     )
                     })}

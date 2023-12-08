@@ -33,7 +33,6 @@ const App: React.FC = () => {
   return (
     <div ref={appRef} className={Classes.App}>
         <RouterProvider router={router} />
-        <Notification />
     </div>
   );
 }

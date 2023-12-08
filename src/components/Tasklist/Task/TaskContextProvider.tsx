@@ -1,67 +1,79 @@
 import React, { useState } from 'react';
 import TaskContext, { TaskContextType } from './task-context';
-import { Tag, PersonaInitialsColor, TaskComment } from '../../../constants';
-import { IFacepilePersona } from '@fluentui/react';
+import { PersonaInitialsColor, TaskComment, 
+    Member, TaskMember, Label } from '../../../constants';
+import { getPersonaInitials, getRandomId, 
+    getTaskMembers, getPersonaColor } from '../../../helper';
+import { usePlannerDispatch } from '../../../Store';
+import { NotificationActions } from '../../../slices/notification-slice';
+import { MessageType } from '../../../constants';
 
-const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => {
+const TaskContextProvider: React.FC<{ taskData: any,
+    children: React.ReactNode }> = (props) => {
 
-    const tskCommntsArr: TaskComment[] = [
-        {
-            id: '1',
-            commentText: 'Adding to the in progress',
-            personaProps: { text: 'Kekin Chheda', imageInitials: 'KC' },
-            commentDate: new Date('December 17, 2022 03:24:00'),
-            initialsColor: PersonaInitialsColor.green
-        },
-        {
-            id: '2',
-            commentText: 'Needs confirmation about UI wireframes',
-            personaProps: { text: 'Kekin Chheda', imageInitials: 'KC' },
-            commentDate: new Date('December 23, 2022 03:24:00'),
-            initialsColor: PersonaInitialsColor.blue
-        },
-        {
-            id: '3',
-            commentText: 'Needs confirmation about DoD',
-            personaProps: { text: 'Kekin Chheda', imageInitials: 'KC' },
-            commentDate: new Date('February 2, 2023 03:30:00'),
-            initialsColor: PersonaInitialsColor.lightBlue
+    const dispatch = usePlannerDispatch();
+
+    const planName = props.taskData.planName;
+    const comments = props.taskData.comments;
+    const lastUpdatedDate = props.taskData.updated;
+
+    // Get Task comments
+    const taskCommentsArr: TaskComment[] = comments.map((commentEle: {comment: string, member: number, date: number}) => {
+        const { comment, member, date } = commentEle;
+
+        // Get member details by id
+        const { firstName, lastName } = props.taskData.members.find((m: Member) => m.id === member);
+        const memberLastName = lastName ? lastName : "";
+        const imageInitials = getPersonaInitials(firstName, memberLastName);
+
+        return {
+            id: getRandomId(),
+            commentText: comment.trim(),
+            personaProps: { text: `${firstName} ${memberLastName}`, imageInitials: imageInitials },
+            commentDate: new Date(date),
+            initialsColor: getPersonaColor(member)
         }
-    ];
+    });
 
-    const taskMembers: IFacepilePersona[] = [
-        {imageInitials: 'KC', personaName: 'Kekin Chheda', initialsColor: PersonaInitialsColor.darkGreen}
-    ];
+    // Get Task members
+    const taskMembers: TaskMember[] = getTaskMembers(props.taskData.members);
 
-    const startDateVal = new Date().getTime();
-    const endDateVal = new Date().getTime();
+    // Get Task labels
+    const taskLabels = props.taskData.labels;
 
-    const [taskName, setTaskName] = useState("Completing React JS project");
-    const [tags, setTags] = useState<Tag[]>([{color: 'Yellow', name: 'Imp'}]);
-    const [taskComments, setTaskComments] = useState<TaskComment[]>(tskCommntsArr);
-    const [taskStatus, setTaskStatus] = useState("Not Started");
-    const [taskPriority, setTaskPriority] = useState("Low");
-    const [members, setMembers] = useState<any>(taskMembers);
+    const startDateVal = props.taskData.start;
+    const endDateVal = props.taskData.due;
+
+    // Fetching Task notes
+    const taskNotes = props.taskData.notes !== "" ? props.taskData.notes.trim(): "";
+
+    const [taskName, setTaskName] = useState(props.taskData.name);
+    const [labels, setLabels] = useState<Label[]>(taskLabels);
+    const [taskComments, setTaskComments] = useState<TaskComment[]>(taskCommentsArr);
+    const [taskStatus, setTaskStatus] = useState(props.taskData.status);
+    const [taskPriority, setTaskPriority] = useState(props.taskData.priority);
+    const [members, setMembers] = useState<TaskMember[]>(taskMembers);
     const [startDate, setStartDate] = useState(startDateVal);
     const [dueDate, setDueDate] = useState(endDateVal);
+    const [notes, setNotes] = useState<string>(taskNotes);
 
-    function addTagHandler(tag: Tag) {
-        let newTags: Tag[] = [];
-        if (tags.findIndex(tg => tg.color === tag.color) === -1) {
-            newTags = [...tags, tag];
-            setTags(newTags);
+    function addLabelHandler(label: Label) {
+        let newLabels: Label[] = [];
+        if (labels.findIndex(l => l.color === label.color) === -1) {
+            newLabels = [...labels, label];
+            setLabels(newLabels);
         } else {
-            const tgVal = tags.find(tg => tg.color === tag.color);
-            const tempTags = tags.filter(tg => tg.color !== tag.color);
-            if (tgVal?.name !== tag.name) {
-                newTags = [...tempTags, tag];
-                setTags(newTags);
+            const labelVal = labels.find(l => l.color === label.color);
+            const tempLabels = labels.filter(l => l.color !== label.color);
+            if (labelVal?.value !== label.value) {
+                newLabels = [...tempLabels, label];
+                setLabels(newLabels);
             }
         }
     }
 
-    function removeTagHandler(tag: Tag) {
-        setTags(tags.filter(tg => tg.name !== tag.name));
+    function removeLabelHandler(label: Label) {
+        setLabels(labels.filter(l => l.color !== label.color));
     }
 
     function taskNameChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
@@ -82,11 +94,12 @@ const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
         }
 
         const commentObj: TaskComment = {
-            id: `${Math.random()}`,
+            id: getRandomId(),
             commentText: comment,
             personaProps: {imageInitials: 'KC', text: currentUser},
             commentDate: new Date(),
-            initialsColor: initialsColor
+            initialsColor: initialsColor,
+            
         };
 
         setTaskComments(prevCommnts => [...prevCommnts, commentObj]);
@@ -100,15 +113,15 @@ const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
         setTaskPriority(priority);
     }
 
-    function addMemberHandler(member: IFacepilePersona) {
+    function addMemberHandler(member: TaskMember) {
         console.log('addMemberHandler called...', members);
         setMembers([...members, member]);
         console.log('All task members are ', members);
     }
 
-    function removeMemberHandler(member: IFacepilePersona) {
+    function removeMemberHandler(member: TaskMember) {
         console.log('removeMemberHandler called...');
-        setMembers(members.filter((m: any) => m.personaName !== member.personaName));
+        setMembers(members.filter((m: any) => m.id !== member.id));
     }
 
     function setStartDateHandler(date: string) {
@@ -121,25 +134,45 @@ const TaskContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
         setDueDate(dtObj.getTime());
     }
 
+    function notesUpdateHandler(notes: string) {
+        var specials = /[*|\":<>[\]{}`\\()';@&$]/;
+
+        if(notes !== "") {
+            if(specials.test(notes)) {
+                dispatch(NotificationActions.showNotification({
+                        message: "Please enter valid text.", 
+                        notificationType: MessageType.Error, 
+                        isNotification: true
+                    }))
+            } else {
+                setNotes(notes);
+            }
+        }
+    }
+
     const taskContextValue: TaskContextType = {
         name: taskName,
+        planName: planName,
         members: members,
-        tags: tags,
+        labels: labels,
         taskComments: taskComments,
         taskStatus: taskStatus,
         taskPriority: taskPriority,
         startDate: startDate,
         dueDate: dueDate,
+        lastUpdatedDate: lastUpdatedDate,
+        notes: notes,
         onStartDateChange: setStartDateHandler,
         onDueDateChange: setDueDateHandler,
-        onAddTag: addTagHandler,
-        onRemoveTag: removeTagHandler,
+        onAddLabel: addLabelHandler,
+        onRemoveLabel: removeLabelHandler,
         onTaskNameChange: taskNameChangeHandler,
         onAddComment: addCommentHandler,
         onTaskStatusChange: taskStatusChangeHandler,
         onTaskPriorityChange: taskPriorityChangeHandler,
         onAddMember: addMemberHandler,
-        onRemoveMember: removeMemberHandler
+        onRemoveMember: removeMemberHandler,
+        onUpdateNotes: notesUpdateHandler
     };
 
     return (

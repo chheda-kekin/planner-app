@@ -59,36 +59,29 @@
     margin: 2px;
 }
 
-/* .actionsContainer {
-    display: flex;
-    flex-direction: column;
-    width: 55%;
-    box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px, rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0px;
-    box-sizing: border-box;
+.primaryBtn {
+    background-color: rgb(49, 132, 86);
+    color: rgb(255, 255, 255);
     border-radius: 2px;
-    position: absolute;
-    color: rgb(50, 49, 48);
-    font-weight: 400;
+    border: 1px solid rgb(49, 132, 86);
     font-size: 14px;
-    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
-    z-index: 9999999 !important;
-    opacity: 1 !important;
-    right: 0;
-    left: 266px;
+    font-weight: 600;
+    margin: 2px;
+    cursor: pointer;
     padding: 5px;
 }
 
-.taskActionsMenu {
-    display: flex;
-    width: 100%;
-    justify-content: flex-start;
+.cancelBtn {
+    background-color: rgb(255, 255, 255);
+    color: rgb(50, 49, 48);
+    border-radius: 2px;
+    border: 1px solid rgb(138, 136, 134);
     padding: 5px;
-    box-sizing: border-box;
-} */
-
-/* .taskActionsMenu:hover {
-    background-color: rgb(237, 235, 233);
-} */
+    font-size: 14px;
+    font-weight: 600;
+    margin: 2px;
+    cursor: pointer;
+  }
 
 .titleRow {
     display: flex;

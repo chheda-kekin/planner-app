@@ -1,45 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import LabelRow from "./LabelRow";
 import { LabelProps, LabelProp } from "../../../../constants";
 
 import Classes from "./LabelPickerDropdown.module.css";
 
-const LabelPickerDropdown: React.FunctionComponent = () => {
+const LabelPickerDropdown: React.FC = () => {
+    const [labelRowProps, setLabelRowProps] = useState<LabelProp[]>(LabelProps);
 
-    const initialEdtLblState = getLabelStateMap();
-    const [edtLblState, setEdtLblState] = useState<Map<string, boolean>>(initialEdtLblState);
+    function edtLblClickHandler(labelName: string): void {
+        let newLabelPropsState: LabelProp[] = [];
 
-    function getLabelStateMap(): Map<string, boolean> {
-        const lblStateMap = new Map<string, boolean>();
-
-        LabelProps.forEach((label: LabelProp) => {
-            lblStateMap.set(label.labelName, false);
+        newLabelPropsState = labelRowProps.map(l => {
+            if(l.labelName === labelName) {
+                l.displayDialog = ! l.displayDialog;
+            } else {
+                l.displayDialog = false;
+            } 
+            return l;
         });
 
-        return lblStateMap;
-    }
-
-    function edtLblClickHandler(labelName: string) {
-        setEdtLblState((prevMapVal) => {
-            const newStateMap = new Map<string, boolean>();
-
-            prevMapVal.forEach((val, key) => {
-                if(key !== labelName) {
-                    newStateMap.set(key, false);
-                } else {
-                    newStateMap.set(labelName, ! (val));
-                }
-            });
-
-            return newStateMap;
-        });
+        setLabelRowProps(newLabelPropsState);
     }
 
     function getLabelRows() {
-        return LabelProps.map(lblPrps => {
+        return labelRowProps.map(lblPrps => {
             return <LabelRow key={lblPrps.labelName} {...lblPrps}
-                edtLblClickHandler={edtLblClickHandler}
-                displayEdtLblDlg={edtLblState.get(lblPrps.labelName)} />
+                        editLabelClickHandler={edtLblClickHandler.bind(lblPrps.labelName)} />
         });
     }
 
@@ -47,7 +33,7 @@ const LabelPickerDropdown: React.FunctionComponent = () => {
         <>
             <div className={Classes.lblPickrDrpDwn}>
                 <div className={Classes.labelPickerSuggestions}>
-                    {getLabelRows()}
+                    { getLabelRows() }
                 </div>
             </div>
         </>

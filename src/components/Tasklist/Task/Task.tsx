@@ -1,46 +1,53 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { usePlannerDispatch } from "../../../Store";
+import { useSelector } from "react-redux";
+import { PlannerState } from "../../../Store";
 import { NotificationActions } from "../../../slices/notification-slice";
+import { planActions } from "../../../slices/plan-slice";
 import TaskForm from "./TaskForm";
 import TaskContextProvider from "./TaskContextProvider";
-import { getPersonaInitials, getLabelColorValue, getLabelFontColorValue } from "../../../helper";
-import { Label, LabelFontColors, LabelColors, MessageType, baseUrl } from "../../../constants"; 
+import { getPersonaInitials, getLabelColorValue, 
+    getLabelFontColorValue, getPersonaColor } from "../../../helper";
+import { Label, MessageType, baseUrl, TaskStatus, Plan, Member } from "../../../constants"; 
 import { DatePicker, IDatePicker, IDatePickerStyles } from "@fluentui/react";
-import { IPersonaSharedProps, IPersonaStyles, Persona, PersonaInitialsColor, PersonaSize } from '@fluentui/react/lib/Persona';
+import { IPersonaStyles, Persona, PersonaSize } from '@fluentui/react/lib/Persona';
 import { Checkbox } from "@mui/material";
 import Modal from "@mui/material/Modal";
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 import Classes from "./Task.module.css";
 import { Delete16Regular, Edit16Regular } from '@fluentui/react-icons'
 import { initializeIcons } from '@fluentui/react';
-initializeIcons();
+import AppClasses from "../../../App.module.css";
 
-type Member = {
-    memberId: number,
-    firstName: string,
-    lastName: string
-};
+initializeIcons();
 
 type TaskProps = {
     id: number, 
     name: string,
+    status: string,
+    planId: number,
     planName: string,
     dueDate: number,
     members: Member[],
-    labels: string,
-    personaColorCodes: Map<number, number>
+    labels: string
 };
 
 const Task: React.FC<TaskProps> = (props) => {
 
     const [open, setOpen] = useState(false);
+    const [openConfirm, setOpenConfirm] = useState(false);
     const [showActions, setShowActions] = useState(false);
 
     const [isRemoved, setIsRemoved] = useState(false);
 
+    const [taskData, setTaskData] = useState();
+
     const dispatch = usePlannerDispatch();
+
+    const plans = useSelector((state: PlannerState) => state.plans);
 
     function showNotification(type: string, message: string): void {
         dispatch(NotificationActions.showNotification({
@@ -56,6 +63,12 @@ const Task: React.FC<TaskProps> = (props) => {
             const { status } = await axios.delete(url);
             if(status === 200) {
                 setIsRemoved(true);
+                const payload = {
+                    id: props.planId,
+                    status: props.status,
+                    isDue: props.dueDate < Date.now()
+                }
+                dispatch(planActions.deleteTaskFromPlan(payload));
             }
         } catch(err) {
             showNotification(MessageType.Error, 'Unable to delete something went wrong!');
@@ -124,19 +137,34 @@ const Task: React.FC<TaskProps> = (props) => {
         setOpen(false);
     }
 
-    function openModal() {
-        setOpen(true);
+    async function getTaskDetailsById() {
+        try {
+            const {data} = await axios.get(`${baseUrl}/tasks/details/${props.id}`);
+            return data;
+        } catch (err) {
+            showNotification(MessageType.Error, 'Something went wrong!');
+        }
     }
 
-    function getTaskMembers() {
+    function editTaskHandler() {
+        console.log('### editTaskHandler called');
+        // Fetch task by id
+        getTaskDetailsById().then(taskDetails => {
+            console.log('#### Task Data', taskDetails);
+            setTaskData(taskDetails);
+            setOpen(true);
+        });
+    }
+
+    function getTaskMembersList() {
 
         return props.members.map(member => {
 
             const imageInitials = getPersonaInitials(member.firstName, member.lastName);
-            const initialsColor = props.personaColorCodes.get(member.memberId);
+            const initialsColor = getPersonaColor(member.id);
 
             return (
-                <Persona key={`${props.id}${member.memberId}`} 
+                <Persona key={`${props.id}${member.id}`} 
                     imageInitials={imageInitials}
                     initialsColor={initialsColor} 
                     size={PersonaSize.size24} styles={personaStyles} />
@@ -166,24 +194,40 @@ const Task: React.FC<TaskProps> = (props) => {
 
     function deleteTaskHandler() {
         deleteTask();
+        setOpenConfirm(false);
     }
 
     return (
         <>
             <Modal open={open} onClose={handleClose}>
-                <TaskContextProvider>
+                <TaskContextProvider taskData={taskData}>
                     <TaskForm onCloseModal={handleClose} />
                 </TaskContextProvider>
             </Modal>
+            {/* Confirmation dialog before deleting task */}
+            <Dialog open={openConfirm} sx={{ '& .MuiDialog-paper': { fontSize: '1rem' } }}>
+                <DialogContent>
+                    You're about to delete task
+                </DialogContent>
+                <DialogActions>
+                    <button className={Classes.primaryBtn} onClick={deleteTaskHandler}>
+                        Confirm
+                    </button>
+                    <button className={Classes.cancelBtn} onClick={() => setOpenConfirm(false)}>
+                        Cancel
+                    </button>
+                </DialogActions>
+            </Dialog>
+            {/* Confirmation dialog before deleting task */}
             {! (isRemoved) && <div className={Classes.taskCard}>
                 <div className={Classes.topBar}>
                     <div className={Classes.planNameRow}>
                         <div className={Classes.planName}>{ props.planName }</div>
                         <div className={Classes.taskActionsContainer} onClick={() => {setShowActions(current => ! current)}}>
-                            <div className={Classes.taskActions} onClick={openModal}>
+                            <div className={Classes.taskActions} onClick={editTaskHandler}>
                                 <Edit16Regular color="rgb(33, 115, 70)" />
                             </div>
-                            <div className={Classes.taskActions} onClick={deleteTaskHandler}>
+                            <div className={Classes.taskActions} onClick={() => setOpenConfirm(true)}>
                                 <Delete16Regular color="rgb(33, 115, 70)" />
                             </div>
                         </div>
@@ -211,7 +255,7 @@ const Task: React.FC<TaskProps> = (props) => {
                             componentRef={instance =>  datePickerRef = instance } />
                     </div>
                     <div className={Classes.bottomBarRightSection}>
-                        { getTaskMembers() }
+                        { getTaskMembersList() }
                     </div>
                 </div>
             </div>}

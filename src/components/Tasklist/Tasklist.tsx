@@ -10,8 +10,7 @@ import Classes from "./Tasklist.module.css";
 type TaskListProps = { 
     status: string, 
     tasks: TaskType[], 
-    displayAddTaskButton: boolean,
-    personaColorCodes: Map<number, number> 
+    displayAddTaskButton: boolean
 };
 
 const Tasklist: React.FC<TaskListProps> = (props) => {
@@ -23,17 +22,17 @@ const Tasklist: React.FC<TaskListProps> = (props) => {
     }
 
     const getTasks = () => {
-        console.log('### props.tasks', props.tasks);
         return props.tasks.map(task => {
             return (
                 <Task id={task.id} 
                     key={task.id} 
-                    name={task.name.trim()} 
+                    name={task.name.trim()}
+                    status={task.status.trim()}
+                    planId={task.planId} 
                     planName={task.planName}
                     dueDate={task.due}
                     members={task.members}
-                    labels={task.labels}
-                    personaColorCodes={props.personaColorCodes} />
+                    labels={task.labels} />
             );
         })
     }
@@ -48,9 +47,9 @@ const Tasklist: React.FC<TaskListProps> = (props) => {
                 </div>
                 <div className={Classes.scrollable}>
                     <div className={Classes.taskGrp}>
-                        {props.displayAddTaskButton && <AddTaskButton addTaskHandler={onAddTaskListener} />}
                         <div id="newTaskDiv"></div>
                         { getTasks() }
+                        {props.displayAddTaskButton && <AddTaskButton addTaskHandler={onAddTaskListener} />}
                         {(props.displayAddTaskButton && addNewTask) && <NewTask />}
                     </div>
                 </div>

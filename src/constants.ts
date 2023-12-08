@@ -12,9 +12,9 @@ export enum PersonaInitialsColor {
     pink = 8,
     magenta = 9,
     purple = 10,
-    black = 11,
+    black = 11, //Deprecated
     orange = 12,
-    red = 13,
+    red = 13, //Deprecated
     darkRed = 14,
     transparent = 15,
     violet = 16,
@@ -70,16 +70,12 @@ export enum LabelFontColors {
 export type LabelProp = {
     backgroundColor: LabelColors,
     color: LabelFontColors,
-    labelName: string
-};
-
-export type Tag = {
-    color: string,
-    name: string | null
+    labelName: string,
+    displayDialog: boolean
 };
 
 export type TaskComment = {
-    id: string,
+    id: number,
     commentText: string,
     personaProps: IPersonaSharedProps,
     commentDate: Date,
@@ -100,6 +96,12 @@ export type Label = {
     value: string;
 }
 
+export type Member = {
+    id: number,
+    firstName: string,
+    lastName: string
+};
+
 export type TaskType = {
     id: number,
     planId: number,
@@ -107,8 +109,15 @@ export type TaskType = {
     name: string,
     status: string,
     due: number,
-    members: {memberId: number, firstName: string, lastName: string}[],
+    members: Member[],
     labels: string
+};
+
+export type TaskMember = {
+    id: number,
+    personaName: string,
+    initialsColor: number,
+    imageInitials: string
 };
 
 export enum MessageType {
@@ -119,46 +128,53 @@ export enum MessageType {
 }
 
 export const LabelProps: LabelProp[] = [
-
     {
         backgroundColor: LabelColors.Red,
         color: LabelFontColors.Red,
-        labelName: 'Red'    
+        labelName: 'Red',
+        displayDialog: false
     },
     {
         backgroundColor: LabelColors.Green,
         color: LabelFontColors.Green,
-        labelName: 'Green'    
+        labelName: 'Green',
+        displayDialog: false
     },
     {
         backgroundColor: LabelColors.Blue,
         color: LabelFontColors.Blue,
-        labelName: 'Blue'    
+        labelName: 'Blue',
+        displayDialog: false
     },
     {
         backgroundColor: LabelColors.Purple,
         color: LabelFontColors.Purple,
-        labelName: 'Purple'    
+        labelName: 'Purple',
+        displayDialog: false
     },
     {
         backgroundColor: LabelColors.Bronze,
         color: LabelFontColors.Bronze,
-        labelName: 'Bronze'    
+        labelName: 'Bronze',
+        displayDialog: false
     },
     {
         backgroundColor: LabelColors.Aqua,
         color: LabelFontColors.Aqua,
-        labelName: 'Aqua'    
+        labelName: 'Aqua',
+        displayDialog: false
     },
     {
         backgroundColor: LabelColors.Lime,
         color: LabelFontColors.Lime,
-        labelName: 'Lime'    
+        labelName: 'Lime',
+        displayDialog: false
     },
     {
         backgroundColor: LabelColors.Yellow,
         color: LabelFontColors.Yellow,
-        labelName: 'Yellow'    
+        labelName: 'Yellow',
+        displayDialog: false
     }
 ];
 

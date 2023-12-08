@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PersonPicker from '../../../../UI/PersonPicker/PersonPicker';
 import { DatePicker, IDatePickerStyles, IFacepilePersona } from '@fluentui/react';
 import { FacepilePersona } from '../../../../UI/PersonPicker/FacepilePersona';
+import { TaskMember } from '../../../../constants';
 
 import Classes from './NewTask.module.css';
 
@@ -35,16 +36,14 @@ const NewTask: React.FC = () => {
 
     const dueDateSelectHandler = (): void => {}
 
-    const [taskMembers, setTaskMembers] = useState<IFacepilePersona[]>([]);
+    const [taskMembers, setTaskMembers] = useState<TaskMember[]>([]);
 
-    const members = FacepilePersona;
-
-    const toggleMemberListHandler = (personDetails: IFacepilePersona): void => {
-        if (taskMembers.findIndex(person => person.personaName === personDetails.personaName) === -1) {
-            setTaskMembers([...taskMembers, personDetails]);
+    const addRemoveMembersHandler = (memberDetails: TaskMember): void => {
+        if (taskMembers.findIndex(m => m.id === memberDetails.id) === -1) {
+            setTaskMembers([...taskMembers, memberDetails]);
             
         } else {
-            setTaskMembers(taskMembers.filter(person => person.personaName !== personDetails.personaName));
+            setTaskMembers(taskMembers.filter(m => m.id !== memberDetails.id));
         }
     }
 
@@ -59,7 +58,8 @@ const NewTask: React.FC = () => {
                 </div>
                 <div className={Classes.assignToField}>
                     <div>
-                        <PersonPicker taskMembers={taskMembers} teamMembers={members} toggleMemberListHandler={toggleMemberListHandler} />
+                        <PersonPicker selectedMembers={taskMembers} 
+                            selectMemberHandler={addRemoveMembersHandler} />
                     </div>
                 </div>
                 <button className={Classes.addTaskBtn}>Add</button>

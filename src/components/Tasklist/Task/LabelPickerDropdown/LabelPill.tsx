@@ -1,27 +1,33 @@
 import React, { useContext } from "react";
-import { Dismiss12Regular, Dismiss16Regular } from "@fluentui/react-icons";
+import { Dismiss16Regular } from "@fluentui/react-icons";
 
 import Classes from "./LabelPill.module.css";
 import TaskContext from "../task-context";
-import { Tag } from "../../../../constants";
+import { Label } from "../../../../constants";
 
-const LabelPill: React.FC<{backgroundColor: string, color: string, labelName: string | null}> = ({backgroundColor, color, labelName}) => {
+type LabelPillProps = {
+    backgroundColor: string, 
+    color: string, 
+    labelName: string
+};
+
+const LabelPill: React.FC<LabelPillProps> = ({backgroundColor, color, labelName}) => {
 
 
     const tskCtx = useContext(TaskContext);
-
-    const tagVal: Tag = {
-        color: backgroundColor,
-        name: labelName
-    };
 
     const edtLblStyles = {
         backgroundColor: backgroundColor,
         color: color
     };
 
-    const removeTagHandler = (e: React.MouseEvent<SVGElement>) => {
-        tskCtx.onRemoveTag(tagVal);
+    const removeLabelHandler = (e: React.MouseEvent<SVGElement>) => {
+        const labelVal: Label = {
+            color: backgroundColor,
+            value: labelName
+        };
+
+        tskCtx.onRemoveLabel(labelVal);
     }
 
     return (
@@ -33,7 +39,7 @@ const LabelPill: React.FC<{backgroundColor: string, color: string, labelName: st
                             <button className={Classes.edtblLblTxt}>{labelName}</button>
                             <button className={Classes.rmvBtn}>
                                 {/* <div> */}
-                                    <Dismiss16Regular onClick={removeTagHandler} />
+                                    <Dismiss16Regular onClick={removeLabelHandler} />
                                 {/* </div> */}
                             </button>
                         </div>
