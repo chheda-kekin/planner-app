@@ -40,11 +40,17 @@
     margin: 5px;
 }
 
-.dueDateField {
+.dateFieldWrapper {
     display: flex;
-    align-items: center;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
     font-size: 14px;
     color: rgb(50, 49, 48);
+}
+
+.dateField {
+    display: flex;
+    align-items: center;
     padding: 5px;
 }
 

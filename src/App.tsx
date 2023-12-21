@@ -4,6 +4,8 @@ import RootLayout from './components/RootLayout/RootLayout';
 import Main from "./components/Main/Main";
 import UserBoard from './components/UserBoard/UserBoard';
 import PlanTaskboard from './components/PlanTaskboard/PlanTaskboard';
+import Login from './components/Login/Login';
+import Signup from './components/Signup/Signup';
 import Notification from './components/Notification/Notification';
 import Classes from './App.module.css';
 import { createBrowserRouter, RouterProvider, RouteObject } from 'react-router-dom';
@@ -27,7 +29,9 @@ const App: React.FC = () => {
   ];
 
   const router = createBrowserRouter([
-    { path: "/", element: <RootLayout />, children: RoutesArr}
+    { path: "/", element: <RootLayout />, children: RoutesArr},
+    { path: "signin", element: <Login />},
+    { path: "signup", element: <Signup />},
   ]);
 
   return (

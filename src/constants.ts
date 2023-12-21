@@ -76,9 +76,10 @@ export type LabelProp = {
 
 export type TaskComment = {
     id: number,
+    memberId: number,
     commentText: string,
     personaProps: IPersonaSharedProps,
-    commentDate: Date,
+    commentDate: number,
     initialsColor: PersonaInitialsColor
 };
 

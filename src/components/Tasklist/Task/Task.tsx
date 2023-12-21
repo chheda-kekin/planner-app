@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { usePlannerDispatch } from "../../../Store";
 import { useSelector } from "react-redux";
@@ -37,25 +37,48 @@ type TaskProps = {
 
 const Task: React.FC<TaskProps> = (props) => {
 
+    let taskNameStyles: any; 
+
+    if(props.status === "Completed") {
+        taskNameStyles = {
+            textDecoration: 'line-through solid 1px rgb(50, 49, 48)'
+        }
+    } else {
+        taskNameStyles = {
+            textDecoration: 'none'
+        }
+    }
+
     const [open, setOpen] = useState(false);
     const [openConfirm, setOpenConfirm] = useState(false);
-    const [showActions, setShowActions] = useState(false);
 
     const [isRemoved, setIsRemoved] = useState(false);
 
     const [taskData, setTaskData] = useState();
 
+    const [isChecked, setIsChecked] = useState(props.status === "Completed");
+
+    const [dueDateVal, setDueDateVal] = useState(props.dueDate);
+
     const dispatch = usePlannerDispatch();
 
     const plans = useSelector((state: PlannerState) => state.plans);
 
-    function showNotification(type: string, message: string): void {
+    function handleCheckboxToggle(e: React.ChangeEvent<HTMLInputElement>) {
+        setIsChecked(currentVal => ! currentVal);
+    }
+
+    const showNotification = useCallback((type: string, message: string) => {
         dispatch(NotificationActions.showNotification({
             message: message, 
             notificationType: type, 
             isNotification: true
         }));
-    }
+    }, [dispatch]);
+
+    // function showNotification(type: string, message: string): void {
+        
+    // }
 
     async function deleteTask() {
         try {
@@ -75,11 +98,64 @@ const Task: React.FC<TaskProps> = (props) => {
         }            
     }
 
+    const updateTask = useCallback(async () => {
+        const reqBody = {
+            id: props.id,
+            status: "Completed",
+            dueDate: props.dueDate
+        };
+        
+        try {
+            const { status } = await axios.put(`${baseUrl}/tasks/updateStatus`, reqBody);
+
+            if(status === 200) {
+                showNotification(MessageType.Success, 'Task marked as complete');
+            }
+        } catch(err: any) {
+            showNotification(MessageType.Error, `${err.message}`);
+        }
+    }, [props.id, props.dueDate, showNotification]);
+
+    const updateDueDate = useCallback(async () => {
+        try {
+            const url = `${baseUrl}/tasks/updateStatus`;
+            const reqBody = {
+                id: props.id,
+                status: props.status,
+                dueDate: dueDateVal
+            }
+            const { status } = await axios.put(url, reqBody);
+            if(status === 200) {
+                showNotification(MessageType.Success, 'Due date updated successfully!');
+            }
+        } catch(err: any) {
+            showNotification(MessageType.Error, `${err.message}`);
+        }
+    }, [props.id, props.status, dueDateVal, showNotification]);
+
     useEffect(() => {
         if(isRemoved) {
             showNotification(MessageType.Success, 'Task deleted!');
         }
-    }, [isRemoved]);
+    }, [isRemoved, showNotification]);
+
+    useEffect(() => {
+        if(dueDateVal !== props.dueDate) {
+            updateDueDate();
+        }
+    }, [dueDateVal, props.dueDate, updateDueDate]);
+
+    useEffect(() => {
+        if(isChecked && props.status !== "Completed") {
+            // Sending request to update the status
+            updateTask();
+            dispatch(planActions.updateTaskStatus({
+                id: props.planId,
+                oldStatus: props.status,
+                newStatus: 'Completed'
+            }));
+        }
+    }, [isChecked, dispatch, updateTask, props.status, props.planId]);
 
     const checkboxStyles = {
         color: 'rgb(33, 115, 70)',
@@ -147,10 +223,8 @@ const Task: React.FC<TaskProps> = (props) => {
     }
 
     function editTaskHandler() {
-        console.log('### editTaskHandler called');
         // Fetch task by id
         getTaskDetailsById().then(taskDetails => {
-            console.log('#### Task Data', taskDetails);
             setTaskData(taskDetails);
             setOpen(true);
         });
@@ -197,6 +271,12 @@ const Task: React.FC<TaskProps> = (props) => {
         setOpenConfirm(false);
     }
 
+    function dueDateSelectHandler(selectedDate: Date | null | undefined) {
+        if(selectedDate) {
+            setDueDateVal(selectedDate.getTime());
+        }
+    }
+
     return (
         <>
             <Modal open={open} onClose={handleClose}>
@@ -223,7 +303,7 @@ const Task: React.FC<TaskProps> = (props) => {
                 <div className={Classes.topBar}>
                     <div className={Classes.planNameRow}>
                         <div className={Classes.planName}>{ props.planName }</div>
-                        <div className={Classes.taskActionsContainer} onClick={() => {setShowActions(current => ! current)}}>
+                        <div className={Classes.taskActionsContainer}>
                             <div className={Classes.taskActions} onClick={editTaskHandler}>
                                 <Edit16Regular color="rgb(33, 115, 70)" />
                             </div>
@@ -234,9 +314,10 @@ const Task: React.FC<TaskProps> = (props) => {
                     </div>
                     <div className={Classes.titleRow}>
                         <div className={Classes.markCompleteButton}>
-                            <Checkbox size="small" sx={checkboxStyles} />
+                            <Checkbox size="small" sx={checkboxStyles} checked={isChecked}
+                                disabled={props.status === "Completed"} onChange={handleCheckboxToggle} />
                         </div>
-                        <div className={Classes.title} title={props.name}>
+                        <div className={Classes.title}  title={props.name} style={taskNameStyles}>
                             {props.name.length > 25 ? `${props.name.slice(0, 25)}...`: `${props.name}`}
                         </div>                      
                     </div>
@@ -247,9 +328,12 @@ const Task: React.FC<TaskProps> = (props) => {
                 </div>
                 <div className={Classes.hrDiv}></div>
                 <div className={Classes.bottomBar}>
-                    <div className={Classes.bottomBarLeftSection} onClick={showDatePickerHandler}>
-                        <DatePicker styles={datePickerStyles} className={Classes.dateLabel}  
-                            value={new Date(props.dueDate)}
+                    <div className={Classes.bottomBarLeftSection}>
+                        <DatePicker styles={datePickerStyles}
+                            className={Classes.dateLabel}
+                            onClick={showDatePickerHandler}
+                            value={new Date(dueDateVal)}
+                            onSelectDate={dueDateSelectHandler}
                             borderless={true}
                             openOnClick={false} 
                             componentRef={instance =>  datePickerRef = instance } />

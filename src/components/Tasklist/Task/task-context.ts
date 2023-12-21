@@ -2,7 +2,9 @@ import React from "react";
 import { TaskComment, TaskMember, Label } from "../../../constants";
 
 export type TaskContextType = {
+    id: number,
     name: string,
+    planId: number,
     planName: string,
     members: TaskMember[],
     labels: Label[],
@@ -11,6 +13,7 @@ export type TaskContextType = {
     taskPriority: string,
     startDate: number,
     dueDate: number,
+    createdDate: number,
     lastUpdatedDate: number,
     notes: string,
     onTaskNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
@@ -27,7 +30,9 @@ export type TaskContextType = {
 };
 
 const TaskContext = React.createContext<TaskContextType>({
+    id: -1,
     name: '',
+    planId: -1,
     planName: '',
     members: [],
     labels: [],
@@ -37,6 +42,7 @@ const TaskContext = React.createContext<TaskContextType>({
     startDate: new Date().getTime(),
     dueDate: new Date().getTime(),
     lastUpdatedDate: new Date().getTime(),
+    createdDate: Date.now(),
     notes: '',
     onStartDateChange: (startDate: string) => {},
     onDueDateChange: (dueDate: string) => {},

@@ -18,21 +18,34 @@ const TaskContextProvider: React.FC<{ taskData: any,
     const lastUpdatedDate = props.taskData.updated;
 
     // Get Task comments
-    const taskCommentsArr: TaskComment[] = comments.map((commentEle: {comment: string, member: number, date: number}) => {
+    const taskCommentsArr: TaskComment[] = comments.map((commentEle: any) => {
         const { comment, member, date } = commentEle;
 
+        console.log('### typeof member', typeof member);
+
         // Get member details by id
-        const { firstName, lastName } = props.taskData.members.find((m: Member) => m.id === member);
+
+        const memberDetails = props.taskData.members.find((m: Member) => m.id === member);
+        let firstName, lastName;
+        if(memberDetails) {
+            firstName = memberDetails.firstName;
+            lastName = memberDetails.lastName;
+        } else {
+            firstName = 'Kekin';
+            lastName = 'Chheda';
+        }
+
         const memberLastName = lastName ? lastName : "";
         const imageInitials = getPersonaInitials(firstName, memberLastName);
 
         return {
             id: getRandomId(),
+            memberId: member,
             commentText: comment.trim(),
             personaProps: { text: `${firstName} ${memberLastName}`, imageInitials: imageInitials },
-            commentDate: new Date(date),
+            commentDate: date,
             initialsColor: getPersonaColor(member)
-        }
+        };
     });
 
     // Get Task members
@@ -73,6 +86,8 @@ const TaskContextProvider: React.FC<{ taskData: any,
     }
 
     function removeLabelHandler(label: Label) {
+        console.log('### removeLabelHandler called');
+        console.log(label);
         setLabels(labels.filter(l => l.color !== label.color));
     }
 
@@ -81,24 +96,21 @@ const TaskContextProvider: React.FC<{ taskData: any,
     }
 
     function addCommentHandler(comment: string) {
-        const currentUser = 'Kekin Chheda';
-        const user = taskComments.find(comnt => comnt.personaProps.text === currentUser);
+        // Getting details of current logged in user needs to replace once start working on 
+        // authentication
+        const memberId = 1;
+        const firstName = 'Kekin';
+        const lastName = 'Chheda'
 
-        let initialsColor: PersonaInitialsColor;
-
-        if (user) {
-            initialsColor = user.initialsColor;
-        } else {
-            let rand = Math.ceil(Math.random() * 1000);
-            initialsColor = rand % 25;
-        }
+        const imageInitials = getPersonaInitials(firstName, lastName);
 
         const commentObj: TaskComment = {
             id: getRandomId(),
-            commentText: comment,
-            personaProps: {imageInitials: 'KC', text: currentUser},
-            commentDate: new Date(),
-            initialsColor: initialsColor,
+            memberId: memberId,
+            commentText: comment.trim(),
+            personaProps: {imageInitials: imageInitials, text: `${firstName} ${lastName}`},
+            commentDate: Date.now(),
+            initialsColor: getPersonaColor(memberId),
             
         };
 
@@ -135,23 +147,15 @@ const TaskContextProvider: React.FC<{ taskData: any,
     }
 
     function notesUpdateHandler(notes: string) {
-        var specials = /[*|\":<>[\]{}`\\()';@&$]/;
-
         if(notes !== "") {
-            if(specials.test(notes)) {
-                dispatch(NotificationActions.showNotification({
-                        message: "Please enter valid text.", 
-                        notificationType: MessageType.Error, 
-                        isNotification: true
-                    }))
-            } else {
-                setNotes(notes);
-            }
+            setNotes(notes);
         }
     }
 
     const taskContextValue: TaskContextType = {
+        id: props.taskData.id,
         name: taskName,
+        planId: props.taskData.planId,
         planName: planName,
         members: members,
         labels: labels,
@@ -160,6 +164,7 @@ const TaskContextProvider: React.FC<{ taskData: any,
         taskPriority: taskPriority,
         startDate: startDate,
         dueDate: dueDate,
+        createdDate: props.taskData.created,
         lastUpdatedDate: lastUpdatedDate,
         notes: notes,
         onStartDateChange: setStartDateHandler,

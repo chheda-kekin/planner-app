@@ -1,13 +1,20 @@
 import React from 'react';
 import { DatePicker, IDatePickerStyles } from '@fluentui/react';
 
-const DatePickerField: React.FC<{selectedDate: Date, selectDateListener: (e: any) => void}> = (props) => {
+type DatePickerFieldProps = {
+    width?: string,
+    selectedDate: Date,
+    selectDateListener: (e: any) => void,
+};
+
+const DatePickerField: React.FC<DatePickerFieldProps> = (props) => {
 
     const datePickerStyles: IDatePickerStyles = {
         textField: {
             "& .ms-TextField-field": {
                 fontSize: 14,
                 fontWeight: 400,
+                textAlign: 'left',
                 fontFamily: `"Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif`,
                 borderBottom: '2px solid rgb(33, 115, 70)',
                 backgroundColor: '#f2f2f2',
@@ -16,7 +23,8 @@ const DatePickerField: React.FC<{selectedDate: Date, selectDateListener: (e: any
         },
         root: {
             color: 'red',
-            margin: '5px 0 0 0'
+            margin: '5px 0 0 0',
+            width: props.width? props.width : '100%'
         },
         icon: {
         },

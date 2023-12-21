@@ -106,3 +106,8 @@ export function getTaskMembers(members: Array<Member>): Array<TaskMember> {
         };
     });    
 }
+
+export function escapeQuotes(str: string): string {
+    let escapedStr = str.replaceAll(`'`, `\\'`);
+    return escapedStr.replaceAll(`"`, `\\"`);
+}

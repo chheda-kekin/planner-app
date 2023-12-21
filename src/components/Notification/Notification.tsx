@@ -17,7 +17,7 @@ const Notification: React.FC = () => {
 
     return (
         <>
-            <Snackbar 
+            {isNotification && <Snackbar 
                 anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
                 message=""
                 autoHideDuration={6000}
@@ -25,7 +25,7 @@ const Notification: React.FC = () => {
                 open={isNotification} 
                 sx={{ width: '30%'}}>
                 <MuiAlert severity={notificationType as AlertColor} sx={{ width: '100%'}}>{message}</MuiAlert>        
-            </Snackbar>
+            </Snackbar>}
         </>
     )
 }

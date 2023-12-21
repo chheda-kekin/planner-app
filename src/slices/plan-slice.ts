@@ -4,12 +4,12 @@ import { PayloadAction } from "@reduxjs/toolkit/dist/createAction";
 import { Plan, baseUrl } from "../constants";
 
 const initialPlanState: Plan[] = [];
-type EnteredPlanType = Omit<Plan, "id">;
 type PlanReducers = { 
     addPlan:(state: Plan[], action: PayloadAction<Plan>) => void, 
     loadPlans: (state: Plan[], action: PayloadAction<Plan[]>) => void,
     deleteTaskFromPlan: (state: Plan[], action: PayloadAction<{id: number, status: string, isDue: boolean}>) => void,
-    addTaskToPlan: (state: Plan[], action: PayloadAction<{id: number, status: string, isDue: boolean}>) => void
+    addTaskToPlan: (state: Plan[], action: PayloadAction<{id: number, status: string, isDue: boolean}>) => void,
+    updateTaskStatus: (state: Plan[], action: PayloadAction<{id: number, oldStatus: string, newStatus: string}>) => void
 };
 
 const planSlice = createSlice<Plan[], PlanReducers>({
@@ -17,7 +17,6 @@ const planSlice = createSlice<Plan[], PlanReducers>({
     initialState: initialPlanState,
     reducers: {
         addPlan: (state: Plan[], action: PayloadAction<Plan>) => {
-            console.log('### addPlan payload', action.payload);
             state.push(action.payload);
         },
         loadPlans: (state: Plan[], action: PayloadAction<Plan[]>) => {
@@ -51,6 +50,30 @@ const planSlice = createSlice<Plan[], PlanReducers>({
                 }
                 if(action.payload.isDue) {
                     state[planIndex].due++;
+                }
+            }
+        },
+        updateTaskStatus: (state: Plan[], action: PayloadAction<{id: number, oldStatus: string, newStatus: string}>) => {
+            const planIndex = state.findIndex(plan => plan.id === action.payload.id);
+
+            if(planIndex > -1) {
+                const oldStatus = action.payload.oldStatus;
+                const newStatus = action.payload.newStatus;
+
+                if(oldStatus === 'Not Started') {
+                    state[planIndex].notStarted--;
+                } else if(oldStatus === 'In Progress') {
+                    state[planIndex].inProgress--;
+                } else {
+                    state[planIndex].completed--;
+                }
+
+                if(newStatus === 'Not Started') {
+                    state[planIndex].notStarted++;
+                } else if(newStatus === 'In Progress') {
+                    state[planIndex].inProgress++;
+                } else {
+                    state[planIndex].completed++;
                 }
             }
         }

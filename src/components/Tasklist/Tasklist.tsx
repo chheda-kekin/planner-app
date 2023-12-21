@@ -50,7 +50,7 @@ const Tasklist: React.FC<TaskListProps> = (props) => {
                         <div id="newTaskDiv"></div>
                         { getTasks() }
                         {props.displayAddTaskButton && <AddTaskButton addTaskHandler={onAddTaskListener} />}
-                        {(props.displayAddTaskButton && addNewTask) && <NewTask />}
+                        {(props.displayAddTaskButton && addNewTask) && <NewTask status={props.status} onAddNewTask={() => {setAddNewTask(false)}} />}
                     </div>
                 </div>
             </div>

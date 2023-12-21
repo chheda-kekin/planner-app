@@ -1,6 +1,5 @@
 import { PersonaInitialsColor, TaskMember } from "../../constants";
 import { getRandomId } from "../../helper";
-import { IFacepilePersona } from "@fluentui/react";
 
 export const FacepilePersona: TaskMember[] = [
     {id: getRandomId(), imageInitials: 'MS', personaName: 'Maor Sharett', initialsColor: PersonaInitialsColor.lightGreen},

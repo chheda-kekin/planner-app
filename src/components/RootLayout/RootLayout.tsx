@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { PlannerState } from "../../Store";
 import { Outlet } from "react-router-dom";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
@@ -10,6 +12,10 @@ import Modal from "../../UI/Modal";
 
 const RootLayout: React.FC = () => {
 
+    const notification = useSelector((state: PlannerState) => {
+        return state.notification
+    });
+
     return (
         <>
             <Header />
@@ -17,7 +23,7 @@ const RootLayout: React.FC = () => {
                 <Sidebar />
                 <div className={Classes.outlet}>
                     <Outlet />
-                    <Notification />
+                    {notification.isNotification && <Notification />}
                 </div>
             </div>
         </>

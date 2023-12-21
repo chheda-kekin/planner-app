@@ -1,4 +1,7 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef } from 'react';
+import { usePlannerDispatch } from '../../../Store';
+import { NotificationActions } from '../../../slices/notification-slice';
+import { planActions } from '../../../slices/plan-slice';
 import PersonPicker from '../../../UI/PersonPicker/PersonPicker';
 import LabelPickerDropdown from './LabelPickerDropdown/LabelPickerDropdown';
 import LabelPill from './LabelPickerDropdown/LabelPill';
@@ -9,16 +12,20 @@ import DescriptionField from './DescriptionField/DescriptionField';
 import CommentBox from './CommentBox/CommentBox';
 import { Checkbox } from "@mui/material";
 
-import { getTimeElapsed } from '../../../helper';
-
-import { LabelColors, LabelFontColors, TaskMember } from '../../../constants';
+import { getTimeElapsed, escapeQuotes } from '../../../helper';
+import { LabelColors, LabelFontColors, TaskMember, 
+    baseUrl, MessageType } from '../../../constants';
 import TaskContext from './task-context';
 
 
 import Classes from './TaskForm.module.css';
 import AppClasses from '../../../App.module.css';
-import { Tag20Regular, Dismiss16Regular, MoreHorizontal16Regular } from "@fluentui/react-icons";
+import { Tag20Regular, Dismiss16Regular, 
+    MoreHorizontal16Regular } from "@fluentui/react-icons";
+import axios from 'axios';
 import { initializeIcons } from "@fluentui/react";
+
+
 
 initializeIcons();
 
@@ -26,12 +33,15 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
 
     const [shwLblPickrDrpdwn, setShwLblPickrDrpdwn] = useState(false);
 
+    const dispatch = usePlannerDispatch();
+
     const tskCtx = useContext(TaskContext);
     const selectedMembers = tskCtx.members;
     const planName = tskCtx.planName.trim();
     const lastUpdatedTime = getTimeElapsed(tskCtx.lastUpdatedDate);
     const lastUpdatedDate = new Date(tskCtx.lastUpdatedDate);
     
+    const initialTaskState = useRef(tskCtx.taskStatus);
 
     // const labelPickrRef = useRef<HTMLDivElement | undefined>();
 
@@ -70,13 +80,94 @@ const TaskForm: React.FC<{ onCloseModal: () => void }> = (props) => {
                 }
             }
 
-            return <LabelPill key={label.value} 
+            return <LabelPill key={label.value} colorName={labelColor} 
                 backgroundColor={bgColor} color={color} labelName={label.value} />
         }))
     }
 
-    const submitFormHandler = () => {
-        console.log(`Task context is ${JSON.stringify(tskCtx)}`);
+    const submitFormHandler = async () => {
+
+        if(tskCtx.name === '') {
+            dispatch(NotificationActions.showNotification({
+                message: 'Task name can not be blank',
+                notificationType: MessageType.Error,
+                isNotification: true
+            }));
+            
+            return null;
+        }
+
+        if(tskCtx.startDate > tskCtx.dueDate) {
+            dispatch(NotificationActions.showNotification({
+                message: 'Start date can not be greater than due date',
+                notificationType: MessageType.Error,
+                isNotification: true
+            }));
+            
+            return null;
+        }
+
+        const requestBody = {
+            id: tskCtx.id,
+            name: escapeQuotes(tskCtx.name),
+            planId: tskCtx.planId,
+            status: tskCtx.taskStatus,
+            priority: tskCtx.taskPriority,
+            startDate: tskCtx.startDate,
+            dueDate: tskCtx.dueDate,
+            created: tskCtx.createdDate,
+            updated: Date.now(),
+            notes: escapeQuotes(tskCtx.notes),
+            members: tskCtx.members.map(m => m.id),
+            labels: tskCtx.labels,
+            comments: tskCtx.taskComments.map(c => {
+                return {
+                    comment: escapeQuotes(c.commentText.trim()),
+                    member: c.memberId,
+                    date: c.commentDate
+                }
+            })
+        };
+
+        try {
+
+            console.log("### Initial state of the task is ", initialTaskState.current);
+            const resp = await axios.put(`${baseUrl}/tasks/update`, requestBody);
+            if(resp.status === 200) {
+                // Send success notification
+                dispatch(NotificationActions.showNotification({
+                    message: 'Task updated successfully!',
+                    notificationType: MessageType.Success,
+                    isNotification: true
+                }));
+
+                if(initialTaskState.current !== tskCtx.taskStatus) {
+                    dispatch(planActions.updateTaskStatus({
+                        id: tskCtx.planId,
+                        oldStatus: initialTaskState.current,
+                        newStatus: tskCtx.taskStatus
+                    }));
+                }
+
+                // Closing the modal
+                props.onCloseModal();
+
+            } else {
+                // Send error notification
+                dispatch(NotificationActions.showNotification({
+                    message: 'Something went wront!',
+                    notificationType: MessageType.Error,
+                    isNotification: true
+                }));
+            }
+        } catch(err: any) {
+            console.log(err);
+            dispatch(NotificationActions.showNotification({
+                message: err.message,
+                notificationType: MessageType.Error,
+                isNotification: true
+            }));
+        }
     }
 
     const toggleLabelPickerHandler = () => {

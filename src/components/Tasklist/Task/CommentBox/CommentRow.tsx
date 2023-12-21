@@ -19,18 +19,27 @@ const personaStyles: IPersonaStyles = {
     textContent: {}
 };
 
-const getDateString = (date: Date) => {
-    const year = date.getFullYear();
-    const month = MonthNames[date.getMonth()];
-    const dateVal = date.getDate();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+const getDateString = (date: number): string => {
+    console.log('#### Comment date', date);
+    let dateStr = '';
+    const commentDate = new Date(date);
+    console.log('### Comment date obj', commentDate);
+    const year = commentDate.getFullYear();
+    const month = MonthNames[commentDate.getMonth()];
+    const dateVal = commentDate.getDate();
+    const hours = commentDate.getHours();
+    const minutes = commentDate.getMinutes();
 
-    return `${month} ${dateVal},${year} ${hours}:${minutes}`
+    dateStr = `${month} ${dateVal},${year} ${hours}:${minutes}`;
+
+    console.log('### Date String', dateStr);
+
+    return dateStr;
 }
 
-
 const CommentRow: React.FC<{comment: TaskComment}> = ({comment}) => {
+
+    console.log('#### type of commentDate', typeof comment.commentDate);
     return (
         <>
             <div className={Classes.commntRwWrpr}>

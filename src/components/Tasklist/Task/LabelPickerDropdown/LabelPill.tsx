@@ -6,13 +6,13 @@ import TaskContext from "../task-context";
 import { Label } from "../../../../constants";
 
 type LabelPillProps = {
-    backgroundColor: string, 
+    backgroundColor: string,
+    colorName: string, 
     color: string, 
     labelName: string
 };
 
-const LabelPill: React.FC<LabelPillProps> = ({backgroundColor, color, labelName}) => {
-
+const LabelPill: React.FC<LabelPillProps> = ({backgroundColor, color, labelName, colorName}) => {
 
     const tskCtx = useContext(TaskContext);
 
@@ -22,8 +22,11 @@ const LabelPill: React.FC<LabelPillProps> = ({backgroundColor, color, labelName}
     };
 
     const removeLabelHandler = (e: React.MouseEvent<SVGElement>) => {
+        e.stopPropagation();
+
+        console.log('##### removeLabelHandler');
         const labelVal: Label = {
-            color: backgroundColor,
+            color: colorName,
             value: labelName
         };
 
