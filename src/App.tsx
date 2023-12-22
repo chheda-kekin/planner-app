@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { PlannerState } from './Store';
 import RootLayout from './components/RootLayout/RootLayout';
 import Main from "./components/Main/Main";
 import UserBoard from './components/UserBoard/UserBoard';
@@ -18,6 +19,8 @@ const App: React.FC = () => {
 
   const dispatch = usePlannerDispatch();
 
+  const notification = useSelector((state: PlannerState) => state.notification);
+
   useEffect(() => {
     dispatch(getAllPlans());
   }, [dispatch]);
@@ -29,15 +32,18 @@ const App: React.FC = () => {
   ];
 
   const router = createBrowserRouter([
-    { path: "/", element: <RootLayout />, children: RoutesArr},
     { path: "signin", element: <Login />},
     { path: "signup", element: <Signup />},
+    { path: "/", element: <RootLayout />, children: RoutesArr}
   ]);
 
   return (
-    <div ref={appRef} className={Classes.App}>
+    <>
+      <div ref={appRef} className={Classes.App}>
         <RouterProvider router={router} />
-    </div>
+        {notification.isNotification &&  <Notification />}
+      </div>
+    </>
   );
 }
 

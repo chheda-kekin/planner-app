@@ -1,0 +1,11 @@
+.radioBtnWrapper {
+    margin: 10px;
+}
+
+.radioBtnWrapper label {
+    font-size: 14px;
+}
+
+.radioBtnWrapper input {
+    margin-right: 5px;
+}

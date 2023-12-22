@@ -17,9 +17,10 @@ import Modal from "@mui/material/Modal";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import Classes from "./Task.module.css";
 import { Delete16Regular, Edit16Regular } from '@fluentui/react-icons'
 import { initializeIcons } from '@fluentui/react';
+
+import Classes from "./Task.module.css";
 import AppClasses from "../../../App.module.css";
 
 initializeIcons();

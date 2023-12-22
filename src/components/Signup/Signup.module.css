@@ -12,10 +12,10 @@
     flex-flow: column nowrap;
     justify-content: center;
     position: absolute;
-    top: 10%;
+    top: 4%;
     left: 32%;
     width: 35%;
-    height: 70%;
+    height: 85%;
     overflow-y: auto;
     background-color: #ffff;
     border-radius: 10px;
@@ -55,11 +55,31 @@
     font-size: 14px;
 }
 
+.required::after {
+    content: " *";
+    color: red;
+}
+
 .field {
     display: flex;
     width: 100%;
 }
 
 .field > input {
+    width: 100%;
+}
+
+.errorDiv {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.errorDiv small {
+    color: red;
+}
+
+.submitButton {
+    display: flex;
+    justify-content: flex-end;
     width: 100%;
 }

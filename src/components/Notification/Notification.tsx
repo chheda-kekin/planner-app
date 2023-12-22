@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { PlannerState, usePlannerDispatch } from '../../Store';
 import { NotificationActions } from '../../slices/notification-slice';
@@ -20,11 +20,12 @@ const Notification: React.FC = () => {
             {isNotification && <Snackbar 
                 anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
                 message=""
+                ClickAwayListenerProps={{onClickAway: () => null}}
                 autoHideDuration={6000}
                 onClose={onCloseHandler}
                 open={isNotification} 
                 sx={{ width: '30%'}}>
-                <MuiAlert severity={notificationType as AlertColor} sx={{ width: '100%'}}>{message}</MuiAlert>        
+                <MuiAlert severity={notificationType as AlertColor} sx={{ width: '100%'}}>{message}</MuiAlert>
             </Snackbar>}
         </>
     )

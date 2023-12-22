@@ -111,3 +111,7 @@ export function escapeQuotes(str: string): string {
     let escapedStr = str.replaceAll(`'`, `\\'`);
     return escapedStr.replaceAll(`"`, `\\"`);
 }
+
+export function validateMemberFirstName(fname: string): boolean {
+    return fname !== '';
+}
