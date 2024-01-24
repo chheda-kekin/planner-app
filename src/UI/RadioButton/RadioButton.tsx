@@ -7,17 +7,18 @@ type RadioButtonProps = {
     value: string;
     label: string;
     checked?: boolean;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const RadioButton: React.FC<RadioButtonProps> = (props) => {
 
-    const isChecked = props.checked ? props.checked : false; 
+    // const isChecked = props.checked ? props.checked : false; 
     return (
         <>
             <div className={Classes.radioBtnWrapper}>
                 <label htmlFor={props.id}>
-                    <input type='radio' name={props.name} 
-                        id={props.id} value={props.value} />
+                    <input checked={props.checked} type='radio' name={props.name} 
+                        id={props.id} value={props.value} onChange={props.handleChange} />
                     {props.label}
                 </label>
             </div>

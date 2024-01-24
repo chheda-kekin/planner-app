@@ -1,4 +1,5 @@
-import { LabelColors, LabelFontColors, Member, TaskMember } from "./constants";
+import { LabelColors, LabelFontColors, ValidationResType,
+     Member, TaskMember } from "./constants";
 
 export function validateInputString(str: string): boolean {
     return str !== "";
@@ -112,6 +113,104 @@ export function escapeQuotes(str: string): string {
     return escapedStr.replaceAll(`"`, `\\"`);
 }
 
-export function validateMemberFirstName(fname: string): boolean {
-    return fname !== '';
+export function validateMemberFirstName(fname: string): ValidationResType {
+    if(fname !== '') {
+        return {
+            value: fname,
+            isValid: true, 
+            message: ''
+        };
+    }
+
+    return {
+        value: fname,
+        isValid: false, 
+        message: 'Please enter first name'
+    };
+}
+
+export function validateMemberLastName(lname: string): ValidationResType {
+    return {
+        value: lname,
+        isValid: true, 
+        message: ''
+    };
+}
+
+export function validateEmail(email: string): ValidationResType {
+    if(email.indexOf('@') !== -1) {
+        return {
+            value: email,
+            isValid: true,
+            message: ''
+        };
+    } else {
+        return {
+            value: email,
+            isValid: false,
+            message: 'Please enter valid email'
+        };
+    }
+}
+
+export function validatePhoneNumber(ph: string): ValidationResType {
+
+    const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+
+    if(ph === '') {
+        return {
+            value: ph,
+            isValid: false,
+            message: 'Please enter phone no'
+        }
+    }
+
+    if(regex.test(ph)) {
+        return {
+            value: ph,
+            isValid: true,
+            message: ''
+        };
+    }
+
+    return {
+        value: ph,
+        isValid: false,
+        message: 'Please enter valid phone no'
+    };
+}
+
+export function validateUserPassword(password: string): ValidationResType {
+    if(password === '') {
+        return {
+            value: password,
+            isValid: false,
+            message: 'Please enter password'
+        };
+    }
+
+    return {
+        value: password,
+        isValid: true,
+        message: ''
+    };
+}
+
+export function validateConfirmPassword(password: string): ValidationResType {
+    const passwordEle = document.getElementById('password') as HTMLInputElement;
+    const enteredPassword = passwordEle!.value;
+
+    if(password !== enteredPassword) {
+        return {
+            value: password,
+            isValid: false,
+            message: 'Password not matching'
+        };
+    }
+
+    return {
+        value: password,
+        isValid: true,
+        message: ''
+    };
 }

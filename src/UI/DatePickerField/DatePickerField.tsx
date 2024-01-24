@@ -37,7 +37,10 @@ const DatePickerField: React.FC<DatePickerFieldProps> = (props) => {
 
     return (
         <>
-            <DatePicker borderless={true} styles={datePickerStyles} value={props.selectedDate} onSelectDate={props.selectDateListener} />
+            <DatePicker borderless={true} 
+                styles={datePickerStyles} 
+                value={props.selectedDate} 
+                onSelectDate={props.selectDateListener} />
         </>
     )
 }

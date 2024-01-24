@@ -121,6 +121,12 @@ export type TaskMember = {
     imageInitials: string
 };
 
+export type ValidationResType = {
+    value: string;
+    isValid: boolean; 
+    message: string;
+}
+
 export enum MessageType {
     Success = 'success',
     Error = 'error',
